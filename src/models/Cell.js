@@ -22,6 +22,17 @@ export default class Cell {
 		return Object.values(DIR_NAMES).filter(dir => !links.includes(dir));
 	}
 
+	get amountNeighbors() {
+		return Object.keys(this.neighbors).length;
+	}
+	get isCorner() {
+		return this.amountNeighbors === 2;
+	}
+	get isEdge() {
+		const n = this.amountNeighbors;
+		return n === 2 || n === 3;
+	}
+
 	setNeighbor(cell, direction) {
 		this.neighbors[direction] = cell;
 	}

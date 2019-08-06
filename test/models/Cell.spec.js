@@ -117,4 +117,33 @@ describe('Cell class', () => {
 			expect(c.walls).toContain(DIR_NAMES.N);
 		})
 	})
+
+	describe('isCorner and isEdge properties (getters)', () => {
+		let cell;
+		let spy;
+
+		beforeEach(() => {
+			cell = new Cell({ x: 5, y: 5 });
+			spy = jest.spyOn(cell, 'amountNeighbors', 'get');
+		})
+
+		it('is an edge if it has 2 or 3 neighbors', () => {
+			spy.mockReturnValue(3);
+			expect(cell.isEdge).toBe(true);
+			
+			spy.mockReturnValue(2);
+			expect(cell.isEdge).toBe(true);
+
+			spy.mockReturnValue(4);
+			expect(cell.isEdge).toBe(false);
+		})
+
+		it('is a corner if it has 2 neighbors', () => {
+			spy.mockReturnValue(2);
+			expect(cell.isCorner).toBe(true);
+
+			spy.mockReturnValue(3);
+			expect(cell.isCorner).toBe(false);
+		})
+	})
 })
