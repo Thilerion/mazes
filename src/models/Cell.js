@@ -5,8 +5,8 @@ export default class Cell {
 	constructor({ x, y }) {
 		this.pos = new Vec(x, y);
 		
-		this.links = {};
-		this.neighbors = {};
+		this.links = {}; // [DIR_NAMES.E]: true
+		this.neighbors = {}; // [DIR_NAMES.E]: Cell object...
 	}
 
 	get x() {
@@ -16,15 +16,15 @@ export default class Cell {
 		return this.pos.y;
 	}
 
-	goTo(direction) {
-		return this.neighbors[direction];
+	setNeighbor(cell, direction) {
+		this.neighbors[direction] = cell;
 	}
 
 	link(direction, bidi = true) {
 		this.links[direction] = true;
 
 		if (bidi && this.neighbors[direction]) {
-			this.goTo(direction).link(oppositeDir(direction), false);
+			this.neighbors[direction].link(oppositeDir(direction), false);
 		}
 	}
 }
