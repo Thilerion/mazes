@@ -3,6 +3,7 @@ import Maze from './Maze';
 import config from './config';
 
 import binaryTreeGenerator from './generators/binaryTree';
+import sidewinderGenerator from './generators/sidewinder';
 
 const canvas = document.getElementById('maze');
 

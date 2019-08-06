@@ -7,18 +7,6 @@ export default function * binaryTreeAlgorithm(Maze, onCycle, onFinish) {
 
 	const dirs = bias.split('').map(biasDir => DIR_NAMES[biasDir]);
 
-	// grid.forEachCell((cell, x, y) => {
-	// 	const nbs = Object.keys(cell.neighbors).filter(nbDir => dirs.includes(nbDir));
-
-	// 	console.log(nbs);
-
-	// 	if (nbs.length) {
-	// 		const nb = rndElement(nbs);
-	// 		cell.link(nb, true);
-	// 	}
-	// 	yield;
-	// })
-
 	const g = grid.grid;
 
 	for (let y = 0; y < g.length; y++) {
