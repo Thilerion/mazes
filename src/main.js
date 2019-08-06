@@ -10,6 +10,9 @@ let maze = new Maze({
 	Renderer: CanvasRenderer,
 	config,
 	canvas
-}).init();
+}).init().render();
 
-maze.render();
+function draw() {
+	maze.render();
+	requestAnimationFrame(draw);
+}
