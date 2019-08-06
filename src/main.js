@@ -2,7 +2,7 @@ import CanvasRenderer from './renderers/Canvas';
 import Maze from './Maze';
 import config from './config';
 
-import { DIR_NAMES } from './constants';
+import binaryTreeGenerator from './generators/binaryTree';
 
 const canvas = document.getElementById('maze');
 
@@ -16,3 +16,5 @@ function draw() {
 	maze.render();
 	requestAnimationFrame(draw);
 }
+
+maze.generateMaze(binaryTreeGenerator);

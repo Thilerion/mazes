@@ -26,6 +26,18 @@ export default class Maze {
 		return this;
 	}
 
+	generateMaze(generator) {
+		const onCycle = () => { };
+		const onFinish = () => this.update();
+		generator(this, onCycle, onFinish);
+	}
+
+	update() {
+		this.stringRenderer.update(this);
+		this.renderer.update(this);
+		this.render();
+	}
+
 	render() {
 		this.renderer.render();
 		return this;

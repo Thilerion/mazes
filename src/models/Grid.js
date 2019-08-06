@@ -93,4 +93,12 @@ export default class Grid {
 		}
 		return output;
 	}
+
+	forEachCell(cb) {
+		for (let y = 0; y < this.grid.length; y++) {
+			for (let x = 0; x < this.grid[y].length; x++) {
+				cb(this.grid[y][x], x, y);
+			}
+		}
+	}
 }
