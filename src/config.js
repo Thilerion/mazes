@@ -1,6 +1,6 @@
 export default {
-	width: 720,
-	height: 720,
+	width: 640,
+	height: 640,
 	cellSize: 40,
 	wallSize: 10,
 

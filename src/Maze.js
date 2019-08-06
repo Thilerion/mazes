@@ -18,6 +18,6 @@ export default class Maze {
 		
 		this.grid = new Grid(this);
 		this.stringRenderer = new StringRenderer(this);
-		this.renderer = new Renderer(this);
+		this.renderer = new Renderer(this).init();
 	}
 }
