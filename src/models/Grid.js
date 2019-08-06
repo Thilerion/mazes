@@ -1,6 +1,6 @@
 import Cell from "./Cell";
 import { dirVectors } from '../utils';
-import { DIR_NAMES, CELL_PARTS } from '../constants';
+import { DIR_NAMES, WALL_CORNER, WALL_H, WALL_V, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../constants';
 
 export default class Grid {
 	constructor({ cols, rows, config }) {
@@ -56,34 +56,34 @@ export default class Grid {
 				const walls = this.grid[y][x].walls;
 
 				if (inclTop && inclLeft) {
-					top.push(CELL_PARTS.WALL_CORNER);
+					top.push(WALL_CORNER);
 				}
 				if (inclTop) {
 					if (walls.includes(DIR_NAMES.N)) {
-						top.push(CELL_PARTS.WALL_H);
-					} else top.push(CELL_PARTS.PASSAGE_OPEN);
-					top.push(CELL_PARTS.WALL_CORNER);
+						top.push(WALL_H);
+					} else top.push(PASSAGE_OPEN);
+					top.push(WALL_CORNER);
 				}
 				if (inclLeft) {
 					if (walls.includes(DIR_NAMES.W)) {
-						body.push(CELL_PARTS.WALL_V);
-					} else body.push(CELL_PARTS.PASSAGE_OPEN);
-					bottom.push(CELL_PARTS.WALL_CORNER);
+						body.push(WALL_V);
+					} else body.push(PASSAGE_OPEN);
+					bottom.push(WALL_CORNER);
 				}
 
 				if (walls.length === 4 && useBlockedCell) {
-					body.push(CELL_PARTS.PASSAGE_BLOCKED);
-				} else body.push(CELL_PARTS.PASSAGE_OPEN);
+					body.push(PASSAGE_BLOCKED);
+				} else body.push(PASSAGE_OPEN);
 
 				if (walls.includes(DIR_NAMES.S)) {
-					bottom.push(CELL_PARTS.WALL_H);
-				} else bottom.push(CELL_PARTS.PASSAGE_OPEN);
+					bottom.push(WALL_H);
+				} else bottom.push(PASSAGE_OPEN);
 
 				if (walls.includes(DIR_NAMES.E)) {
-					body.push(CELL_PARTS.WALL_V);
-				} else body.push(CELL_PARTS.PASSAGE_OPEN);
+					body.push(WALL_V);
+				} else body.push(PASSAGE_OPEN);
 				
-				bottom.push(CELL_PARTS.WALL_CORNER);
+				bottom.push(WALL_CORNER);
 			}
 
 			if (top.length > 0) {

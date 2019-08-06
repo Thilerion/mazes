@@ -5,10 +5,8 @@ export const DIR_NAMES = {
 	W: "WEST"
 }
 
-export const CELL_PARTS = {
-	WALL_CORNER: "*",
-	WALL_H: "-",
-	WALL_V: "|",
-	PASSAGE_OPEN: " ",
-	PASSAGE_BLOCKED: "#"
-}
+export const WALL_CORNER = "*";
+export const WALL_H = "-";
+export const WALL_V = "|";
+export const PASSAGE_OPEN = " ";
+export const PASSAGE_BLOCKED = "#";

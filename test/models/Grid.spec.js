@@ -1,6 +1,5 @@
 import Grid from '../../src/models/Grid';
-import Cell from '../../src/models/Cell';
-import { DIR_NAMES, CELL_PARTS } from '../../src/constants';
+import { DIR_NAMES, WALL_CORNER, WALL_H, WALL_V, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../../src/constants';
 
 const gridOptions = {
 	cols: 15,
@@ -69,7 +68,7 @@ describe('Grid class', () => {
 			expect(cell.neighbors[DIR_NAMES.W].neighbors[DIR_NAMES.E]).toBe(cell);
 		})
 	})
-	
+
 	describe('toCellParts method', () => {
 		const rows = 4;
 		const cols = 3;
@@ -82,7 +81,7 @@ describe('Grid class', () => {
 			const output = g.toCellParts();
 
 			const firstRowTopWall = output[0].join('');
-			const expected = CELL_PARTS.WALL_CORNER + (CELL_PARTS.WALL_H + CELL_PARTS.WALL_CORNER).repeat(cols);
+			const expected = WALL_CORNER + (WALL_H + WALL_CORNER).repeat(cols);
 
 			expect(firstRowTopWall).toBe(expected);
 		})
@@ -102,26 +101,26 @@ describe('Grid class', () => {
 			const output = g.toCellParts();
 
 			const expectedTop = [
-				CELL_PARTS.WALL_CORNER,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.WALL_CORNER,
-				CELL_PARTS.WALL_H,
-				CELL_PARTS.WALL_CORNER,
-				CELL_PARTS.WALL_H,
-				CELL_PARTS.WALL_CORNER
+				WALL_CORNER,
+				PASSAGE_OPEN,
+				WALL_CORNER,
+				WALL_H,
+				WALL_CORNER,
+				WALL_H,
+				WALL_CORNER
 			]
 
 			expect(output[0]).toEqual(expectedTop);
 
 			const secondRowBody = output[3]; // wall, cells(1st), wall, cells(2nd)
 			const expectedSecondRowBody = [
-				CELL_PARTS.WALL_V,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.WALL_V,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.WALL_V,
+				WALL_V,
+				PASSAGE_OPEN,
+				WALL_V,
+				PASSAGE_OPEN,
+				PASSAGE_OPEN,
+				PASSAGE_OPEN,
+				WALL_V,
 			];
 
 			expect(secondRowBody).toEqual(expectedSecondRowBody);
@@ -133,13 +132,13 @@ describe('Grid class', () => {
 			let output = g.toCellParts();
 			let firstRowBody = output[1];
 			let expected = [
-				CELL_PARTS.WALL_V,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.WALL_V,
-				CELL_PARTS.PASSAGE_OPEN,
-				CELL_PARTS.WALL_V
+				WALL_V,
+				PASSAGE_OPEN,
+				PASSAGE_OPEN,
+				PASSAGE_OPEN,
+				WALL_V,
+				PASSAGE_OPEN,
+				WALL_V
 			];
 
 			expect(firstRowBody).toEqual(expected);
@@ -147,7 +146,7 @@ describe('Grid class', () => {
 			output = g.toCellParts(true);
 			firstRowBody = output[1];
 			// Because no links to other cells, this entire cell is blocked off.
-			expected[5] = CELL_PARTS.PASSAGE_BLOCKED;
+			expected[5] = PASSAGE_BLOCKED;
 			expect(firstRowBody).toEqual(expected);
 		})
 	})
