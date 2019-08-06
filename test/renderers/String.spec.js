@@ -3,9 +3,16 @@ import StringRenderer from '../../src/renderers/String';
 import { DIR_NAMES } from '../../src/constants';
 
 describe('renderer to string', () => {
+	let grid;
+	let renderer;
+
+	beforeEach(() => {
+		grid = new Grid({ cols: 2, rows: 2 }).init().configureNeighbors();
+		renderer = new StringRenderer({ grid });
+	})
+
 	it('correctly renders a closed Grid object to a string', () => {
-		const g = new Grid({ cols: 2, rows: 2 }).init().configureNeighbors();
-		const str = StringRenderer(g);
+		const str = renderer.render();
 
 		let expected = [
 			'*---*---*',
@@ -19,10 +26,9 @@ describe('renderer to string', () => {
 	})
 
 	it('correctly handles linked cells', () => {
-		const g = new Grid({ cols: 2, rows: 2 }).init().configureNeighbors();
-		g.grid[0][0].link(DIR_NAMES.E, true);
+		grid.grid[0][0].link(DIR_NAMES.E, true);
 
-		const str = StringRenderer(g);
+		const str = renderer.render();
 
 		let expected = [
 			'*---*---*',
@@ -36,10 +42,9 @@ describe('renderer to string', () => {
 	})
 
 	it('can handle blocked off cells', () => {
-		const g = new Grid({ cols: 2, rows: 2 }).init().configureNeighbors();
-		g.grid[0][0].link(DIR_NAMES.E, true);
+		grid.grid[0][0].link(DIR_NAMES.E, true);
 
-		const str = StringRenderer(g, true);
+		const str = renderer.render({useBlockedCell: true});
 
 		let expected = [
 			'*---*---*',

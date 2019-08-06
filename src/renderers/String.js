@@ -10,22 +10,30 @@ const cellPartMap = {
 	WALL_OPEN: " "
 }
 
-const StringRenderer = (Grid, useBlockedCell = false) => {
-	let output = '';
-	const cellParts = Grid.toCellParts(useBlockedCell);
+export default class StringRenderer {
+	constructor({ grid, config }) {
+		this.grid = grid;
+		this.config = config;
+	}
 
-	cellParts.forEach(row => {
-		row.forEach((part, idx) => {
-			// check if passage_open used to be a wall
-			// to account for open walls being 3 wide
-			if (part === PASSAGE_OPEN && idx % 2 === 0) {
-				output += cellPartMap['WALL_OPEN'];
-			} else output += cellPartMap[part];
+	render({ useBlockedCell = false, toConsole = false } = {}) {
+		let output = '';
+		const cellParts = this.grid.toCellParts(useBlockedCell);
+
+		cellParts.forEach(row => {
+			row.forEach((part, idx) => {
+				// check if passage_open used to be a wall
+				// to account for open walls being 3 wide
+				if (part === PASSAGE_OPEN && idx % 2 === 0) {
+					output += cellPartMap['WALL_OPEN'];
+				} else output += cellPartMap[part];
+			})
+			output += '\n';
 		})
-		output += '\n';
-	})
-
-	return output.trim();
+	
+		if (toConsole) {
+			console.log(output);
+		}
+		return output.trim();
+	}
 }
-
-export default StringRenderer;
