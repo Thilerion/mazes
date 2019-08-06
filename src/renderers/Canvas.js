@@ -17,6 +17,7 @@ export default class CanvasRenderer {
 
 		this.colorWall = config.colors.wall;
 		this.colorPassage = config.colors.passage;
+		this.colorBackground = config.colors.background;
 
 		this.canvas = canvas;
 		this.ctx = this.canvas.getContext('2d');
@@ -32,15 +33,14 @@ export default class CanvasRenderer {
 	render() {
 		const cellParts = this.grid.toCellParts(false);
 
-		console.log(cellParts);
-
 		for (let i = 0; i < cellParts.length; i++) {
 			for (let j = 0; j < cellParts[i].length; j++) {
 
-				// (0 1 2 3 4)
-				// (|, ,|, ,|)
-				// uneven = passage
-				// even = wall
+				const { draw, color } = this.getCellPartType(cellParts[i][j]);
+
+				if (!draw) {
+					continue;
+				}
 
 				const [cellX, cellY] = this.getCellCoords(j, i);
 
@@ -51,8 +51,6 @@ export default class CanvasRenderer {
 
 				if (w === this.passageSize) x += this.wallSize;
 				if (h === this.passageSize) y += this.wallSize;
-
-				const color = this.getCellPartColor(cellParts[i][j]);
 
 				this.ctx.fillStyle = color;
 				this.ctx.fillRect(x, y, w, h);
@@ -80,14 +78,23 @@ export default class CanvasRenderer {
 		return { w, h };
 	}
 
-	getCellPartColor(type) {
-		if (CLOSED_PARTS.includes(type)) {
-			return this.colorWall;
-		} else if (OPEN_PARTS.includes(type)) {
-			return this.colorPassage;
+	getCellPartType(part) {
+		let color;
+
+		if (CLOSED_PARTS.includes(part)) {
+			color = this.colorWall;
+		} else if (OPEN_PARTS.includes(part)) {
+			color = this.colorPassage;
 		} else {
 			console.warn("Unrecognized maze type.");
-			return "red";
+			color = "red";
+			return { color, draw: true };
+		}
+
+		if (color === this.colorBackground) {
+			return { color, draw: false };
+		} else {
+			return { color, draw: true };
 		}
 	}
 

@@ -6,7 +6,8 @@ export default {
 
 	colors: {
 		wall: 'black',
-		passage: 'white'
+		passage: 'white',
+		background: 'black'
 	}
 
 	/*generators: {
