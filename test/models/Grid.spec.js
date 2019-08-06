@@ -1,6 +1,6 @@
 import Grid from '../../src/models/Grid';
 import Cell from '../../src/models/Cell';
-import { DIR_NAMES } from '../../src/constants';
+import { DIR_NAMES, CELL_PARTS } from '../../src/constants';
 
 const gridOptions = {
 	cols: 15,
@@ -69,41 +69,86 @@ describe('Grid class', () => {
 			expect(cell.neighbors[DIR_NAMES.W].neighbors[DIR_NAMES.E]).toBe(cell);
 		})
 	})
-
-	describe('toString method', () => {
-		it('returns the correct string with all walls', () => {
-			const g = new Grid({ cols: 3, rows: 3 }).init().configureNeighbors();
-			const expected = [
-				'*---*---*---*',
-				'|   |   |   |',
-				'*---*---*---*',
-				'|   |   |   |',
-				'*---*---*---*',
-				'|   |   |   |',
-				'*---*---*---*'
-			].join('\n');
-			const str = g.toString();
-			expect(str).toEqual(expected);
+	
+	describe('toCellParts method', () => {
+		const rows = 4;
+		const cols = 3;
+		let g;
+		beforeEach(() => {
+			g = new Grid({ cols, rows }).init().configureNeighbors();
 		})
 
-		it('returns the correct string with some walls missing', () => {
-			const g = new Grid({ cols: 3, rows: 3 }).init().configureNeighbors();
+		it('correctly assigns first row of walls and corners', () => {
+			const output = g.toCellParts();
+
+			const firstRowTopWall = output[0].join('');
+			const expected = CELL_PARTS.WALL_CORNER + (CELL_PARTS.WALL_H + CELL_PARTS.WALL_CORNER).repeat(cols);
+
+			expect(firstRowTopWall).toBe(expected);
+		})
+
+		it('returns the correct amount of rows and columns', () => {
+			const output = g.toCellParts();
+			const expectedRows = rows * 2 + 1; // rows*(mid + bottom) + 1*(top)
+			const expectedCols = cols * 2 + 1;
+
+			expect(output).toHaveLength(expectedRows);
+			expect(output[0]).toHaveLength(expectedCols);
+		})
+
+		it('correctly returns open passages', () => {
+			g.grid[1][1].link(DIR_NAMES.E, true);
+			g.grid[0][0].link(DIR_NAMES.N, false);
+			const output = g.toCellParts();
+
+			const expectedTop = [
+				CELL_PARTS.WALL_CORNER,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.WALL_CORNER,
+				CELL_PARTS.WALL_H,
+				CELL_PARTS.WALL_CORNER,
+				CELL_PARTS.WALL_H,
+				CELL_PARTS.WALL_CORNER
+			]
+
+			expect(output[0]).toEqual(expectedTop);
+
+			const secondRowBody = output[3]; // wall, cells(1st), wall, cells(2nd)
+			const expectedSecondRowBody = [
+				CELL_PARTS.WALL_V,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.WALL_V,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.WALL_V,
+			];
+
+			expect(secondRowBody).toEqual(expectedSecondRowBody);
+		})
+
+		it('can handle entirely blocked off cells', () => {
 			g.grid[0][0].link(DIR_NAMES.E, true);
-			g.grid[0][0].link(DIR_NAMES.W);
-			g.grid[1][1].link(DIR_NAMES.S, true);
-			g.grid[1][1].link(DIR_NAMES.N, true);
-			g.grid[2][1].link(DIR_NAMES.E, true);
-			const expected = [
-				'*---*---*---*',
-				'        |   |',
-				'*---*   *---*',
-				'|   |   |   |',
-				'*---*   *---*',
-				'|   |       |',
-				'*---*---*---*'
-			].join('\n');
-			const str = g.toString();
-			expect(str).toEqual(expected);
+
+			let output = g.toCellParts();
+			let firstRowBody = output[1];
+			let expected = [
+				CELL_PARTS.WALL_V,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.WALL_V,
+				CELL_PARTS.PASSAGE_OPEN,
+				CELL_PARTS.WALL_V
+			];
+
+			expect(firstRowBody).toEqual(expected);
+
+			output = g.toCellParts(true);
+			firstRowBody = output[1];
+			// Because no links to other cells, this entire cell is blocked off.
+			expected[5] = CELL_PARTS.PASSAGE_BLOCKED;
+			expect(firstRowBody).toEqual(expected);
 		})
 	})
 })

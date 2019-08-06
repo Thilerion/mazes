@@ -1,6 +1,6 @@
 import Cell from "./Cell";
 import { dirVectors } from '../utils';
-import { DIR_NAMES } from '../constants';
+import { DIR_NAMES, CELL_PARTS } from '../constants';
 
 export default class Grid {
 	constructor({ cols, rows, config }) {
@@ -45,63 +45,52 @@ export default class Grid {
 		return x >= 0 && y >= 0 && x < this.cols && y < this.rows;
 	}
 
-	toString() {
-		let output = '';
+	toCellParts(useBlockedCell = false) {
+		let output = [];
 		for (let y = 0; y < this.rows; y++) {
-
-			let top = '';
-			let body = '';
-			let bottom = '';
+			let top = [], body = [], bottom = [];
 
 			for (let x = 0; x < this.cols; x++) {
-				const includeTop = y === 0;
-				const includeLeft = x === 0;
-				const cell = this.grid[y][x];
-				const walls = cell.walls;
+				const inclTop = y === 0;
+				const inclLeft = x === 0;
+				const walls = this.grid[y][x].walls;
 
-				if (includeTop && includeLeft) {
-					top += '*';
+				if (inclTop && inclLeft) {
+					top.push(CELL_PARTS.WALL_CORNER);
 				}
-				if (includeTop) {
-					// if top wall
+				if (inclTop) {
 					if (walls.includes(DIR_NAMES.N)) {
-						top += '---';
-					} else {
-						top += '   ';
-					}
-					top += '*';
+						top.push(CELL_PARTS.WALL_H);
+					} else top.push(CELL_PARTS.PASSAGE_OPEN);
+					top.push(CELL_PARTS.WALL_CORNER);
 				}
-				if (includeLeft) {
-					// if left wall
+				if (inclLeft) {
 					if (walls.includes(DIR_NAMES.W)) {
-						body += '|';
-					} else {
-						body += ' ';
-					}
-					bottom += '*';
+						body.push(CELL_PARTS.WALL_V);
+					} else body.push(CELL_PARTS.PASSAGE_OPEN);
+					bottom.push(CELL_PARTS.WALL_CORNER);
 				}
 
-				body += '   ';
+				if (walls.length === 4 && useBlockedCell) {
+					body.push(CELL_PARTS.PASSAGE_BLOCKED);
+				} else body.push(CELL_PARTS.PASSAGE_OPEN);
 
-				// if bottom wall
 				if (walls.includes(DIR_NAMES.S)) {
-					bottom += '---';
-				} else {
-					bottom += '   ';
-				}
+					bottom.push(CELL_PARTS.WALL_H);
+				} else bottom.push(CELL_PARTS.PASSAGE_OPEN);
 
-				// if right wall
 				if (walls.includes(DIR_NAMES.E)) {
-					body += '|';
-				} else {
-					body += ' ';
-				}
-				bottom += '*';
+					body.push(CELL_PARTS.WALL_V);
+				} else body.push(CELL_PARTS.PASSAGE_OPEN);
+				
+				bottom.push(CELL_PARTS.WALL_CORNER);
 			}
-			const add = `${top}\n${body}\n${bottom}`;
-			output += add;
+
+			if (top.length > 0) {
+				output.push(top);
+			}
+			output.push(body, bottom);
 		}
-		console.log(output);
 		return output;
 	}
 }
