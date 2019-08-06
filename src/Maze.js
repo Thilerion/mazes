@@ -26,10 +26,32 @@ export default class Maze {
 		return this;
 	}
 
-	generateMaze(generator) {
+	generateMaze(generatorFn) {
 		const onCycle = () => { };
 		const onFinish = () => this.update();
-		generator(this, onCycle, onFinish);
+
+		const generator = generatorFn(this, onCycle, onFinish);
+		let done = false;
+		while (!done) {
+			done = generator.next().done;
+		}
+	}	
+
+	generateMazeVisual(generatorFn) {
+		const onCycle = () => this.update();
+		const onFinish = () => this.update();
+
+		const generator = generatorFn(this, onCycle, onFinish);
+		let done = false;
+
+		const loop = () => {
+			done = generator.next().done;
+			if (!done) {
+				requestAnimationFrame(loop);
+			}
+		}
+
+		loop();
 	}
 
 	update() {

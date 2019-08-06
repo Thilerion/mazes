@@ -17,4 +17,4 @@ function draw() {
 	requestAnimationFrame(draw);
 }
 
-maze.generateMaze(binaryTreeGenerator);
+maze.generateMazeVisual(binaryTreeGenerator);
