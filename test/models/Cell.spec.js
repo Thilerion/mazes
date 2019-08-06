@@ -73,4 +73,48 @@ describe('Cell class', () => {
 			expect(cEast.links[DIR_NAMES.W]).toBe(true);
 		})
 	})
+
+	describe('Walls property (getter)', () => {
+		it('returns each direction without a link', () => {
+			let c = new Cell({ x: 5, y: 5 });
+	
+			expect(c.walls).toHaveLength(4);
+			for (let dir in DIR_NAMES) {
+				expect(c.walls).toContain(DIR_NAMES[dir]);
+			}
+	
+			c.links = {
+				[DIR_NAMES.E]: true,
+				[DIR_NAMES.S]: true
+			};
+	
+			expect(c.walls).toHaveLength(2);
+			expect(c.walls).toContain(DIR_NAMES.N);
+			expect(c.walls).toContain(DIR_NAMES.W);
+			expect(c.walls).not.toContain(DIR_NAMES.E);
+	
+			c.links[DIR_NAMES.N] = true;
+			c.links[DIR_NAMES.W] = true;
+	
+			expect(c.walls).toHaveLength(0);
+		})
+
+		it('does not return direction where the link has been set to false', () => {
+			let c = new Cell({ x: 5, y: 5 });
+	
+			// Setting north link, so north wall is removed (3 walls remaining)
+			c.links = {
+				[DIR_NAMES.N]: true
+			};
+	
+			expect(c.walls).toHaveLength(3);
+			expect(c.walls).not.toContain(DIR_NAMES.N);
+	
+			// Removing north link, so north wall is added (4 walls)
+			c.links[DIR_NAMES.N] = false;
+	
+			expect(c.walls).toHaveLength(4);
+			expect(c.walls).toContain(DIR_NAMES.N);
+		})
+	})
 })

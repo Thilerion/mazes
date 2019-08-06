@@ -1,5 +1,6 @@
 import Vec from "./Vec";
 import { oppositeDir } from '../utils';
+import { DIR_NAMES } from '../constants';
 
 export default class Cell {
 	constructor({ x, y }) {
@@ -14,6 +15,11 @@ export default class Cell {
 	}
 	get y() {
 		return this.pos.y;
+	}
+	get walls() {
+		const links = Object.keys(this.links).filter(key => this.links[key]);
+
+		return Object.values(DIR_NAMES).filter(dir => !links.includes(dir));
 	}
 
 	setNeighbor(cell, direction) {
