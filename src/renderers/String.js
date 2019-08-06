@@ -36,4 +36,9 @@ export default class StringRenderer {
 		}
 		return output.trim();
 	}
+
+	update({ grid }) {
+		this.grid = grid;
+		return this;
+	}
 }
