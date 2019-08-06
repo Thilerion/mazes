@@ -10,6 +10,8 @@ export default {
 		background: 'black'
 	},
 
+	generatorAnimFps: 60,
+
 	generators: {
 		binaryTree: {
 			bias: "SE"

@@ -12,9 +12,4 @@ let maze = new Maze({
 	canvas
 }).init().render();
 
-function draw() {
-	maze.render();
-	requestAnimationFrame(draw);
-}
-
 maze.generateMazeVisual(binaryTreeGenerator);

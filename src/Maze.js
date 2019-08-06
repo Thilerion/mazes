@@ -42,16 +42,18 @@ export default class Maze {
 		const onFinish = () => this.update();
 
 		const generator = generatorFn(this, onCycle, onFinish);
-		let done = false;
+		this.generatorLoop(generator);
+	}
 
-		const loop = () => {
-			done = generator.next().done;
-			if (!done) {
-				requestAnimationFrame(loop);
+	generatorLoop(fn) {
+		if (!fn.next().done) {
+			const fps = this.config.generatorAnimFps;
+			if (fps >= 60) {
+				requestAnimationFrame(() => this.generatorLoop(fn));
+			} else {
+				setTimeout(() => this.generatorLoop(fn), 1000 / fps);
 			}
 		}
-
-		loop();
 	}
 
 	update() {
