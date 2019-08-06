@@ -1,5 +1,5 @@
 import Grid from '../../src/models/Grid';
-import { DIR_NAMES, WALL_CORNER, WALL_H, WALL_V, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../../src/constants';
+import { DIR_NAMES, WALL_CORNER, WALL_H, WALL_V, WALL_OPEN, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../../src/constants';
 
 const gridOptions = {
 	cols: 15,
@@ -102,7 +102,7 @@ describe('Grid class', () => {
 
 			const expectedTop = [
 				WALL_CORNER,
-				PASSAGE_OPEN,
+				WALL_OPEN,
 				WALL_CORNER,
 				WALL_H,
 				WALL_CORNER,
@@ -118,7 +118,7 @@ describe('Grid class', () => {
 				PASSAGE_OPEN,
 				WALL_V,
 				PASSAGE_OPEN,
-				PASSAGE_OPEN,
+				WALL_OPEN,
 				PASSAGE_OPEN,
 				WALL_V,
 			];
@@ -134,7 +134,7 @@ describe('Grid class', () => {
 			let expected = [
 				WALL_V,
 				PASSAGE_OPEN,
-				PASSAGE_OPEN,
+				WALL_OPEN,
 				PASSAGE_OPEN,
 				WALL_V,
 				PASSAGE_OPEN,

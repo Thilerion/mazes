@@ -1,6 +1,6 @@
 import Cell from "./Cell";
 import { dirVectors } from '../utils';
-import { DIR_NAMES, WALL_CORNER, WALL_H, WALL_V, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../constants';
+import { DIR_NAMES, WALL_CORNER, WALL_H, WALL_V, WALL_OPEN, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../constants';
 
 export default class Grid {
 	constructor({ cols, rows, config }) {
@@ -61,13 +61,13 @@ export default class Grid {
 				if (inclTop) {
 					if (walls.includes(DIR_NAMES.N)) {
 						top.push(WALL_H);
-					} else top.push(PASSAGE_OPEN);
+					} else top.push(WALL_OPEN);
 					top.push(WALL_CORNER);
 				}
 				if (inclLeft) {
 					if (walls.includes(DIR_NAMES.W)) {
 						body.push(WALL_V);
-					} else body.push(PASSAGE_OPEN);
+					} else body.push(WALL_OPEN);
 					bottom.push(WALL_CORNER);
 				}
 
@@ -77,11 +77,11 @@ export default class Grid {
 
 				if (walls.includes(DIR_NAMES.S)) {
 					bottom.push(WALL_H);
-				} else bottom.push(PASSAGE_OPEN);
+				} else bottom.push(WALL_OPEN);
 
 				if (walls.includes(DIR_NAMES.E)) {
 					body.push(WALL_V);
-				} else body.push(PASSAGE_OPEN);
+				} else body.push(WALL_OPEN);
 				
 				bottom.push(WALL_CORNER);
 			}

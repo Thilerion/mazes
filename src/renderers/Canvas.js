@@ -1,4 +1,4 @@
-import { WALL_CORNER, WALL_H, WALL_V, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../constants';
+import { WALL_CORNER, WALL_H, WALL_V, PASSAGE_BLOCKED, PASSAGE_OPEN, WALL_OPEN } from '../constants';
 
 export default class CanvasRenderer {
 	constructor({ grid, config, canvas, width, height, cols, rows }) {
