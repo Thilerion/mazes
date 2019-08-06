@@ -1,0 +1,14 @@
+@import '../node_modules/sanitize.css';
+@import '../node_modules/sanitize.css/forms.css';
+@import '../node_modules/sanitize.css/typography.css';
+
+body {
+	text-align: center;
+	background-color: #333;
+	color: white;
+}
+
+#maze {
+	margin-top: 3rem;
+	background-color: black;
+}
