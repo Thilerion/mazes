@@ -33,6 +33,10 @@ export default class Cell {
 		return n === 2 || n === 3;
 	}
 
+	hasNeighborInDirection(dir) {
+		return Object.keys(this.neighbors).includes(dir);
+	}
+
 	setNeighbor(cell, direction) {
 		this.neighbors[direction] = cell;
 	}
