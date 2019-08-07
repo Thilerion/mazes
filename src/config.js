@@ -15,6 +15,9 @@ export default {
 	generators: {
 		binaryTree: {
 			bias: "SE"
+		},
+		sidewinder: {
+			verticalBias: 0.5, // lower for longer horizontal paths
 		}
 	}
 }

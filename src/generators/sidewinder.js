@@ -4,7 +4,6 @@ import { rndElement } from '../utils';
 // Work through grid by row, grouping cells together 
 //		(random amount, the "run" of cells)
 // Sometimes carve north (dependent on coin flip)
-
 const coinFlip = (odds = 0.5) => {
 	return Math.random() < odds;
 }
@@ -12,6 +11,7 @@ const coinFlip = (odds = 0.5) => {
 export default function* sidewinderAlgorithm(Maze, onCycle, onFinish) {
 	const { grid, config } = Maze;
 
+	const { verticalBias = 0.5 } = config.generators.sidewinder;
 	const g = grid.grid;
 
 	for (let y = 0; y < g.length; y++) {
@@ -26,7 +26,7 @@ export default function* sidewinderAlgorithm(Maze, onCycle, onFinish) {
 			const atEasternEdge = !cell.neighbors[DIR_NAMES.E];
 			const atNorthernEdge = !cell.neighbors[DIR_NAMES.N];
 
-			const shouldClose = atEasternEdge || (!atNorthernEdge && coinFlip());
+			const shouldClose = atEasternEdge || (!atNorthernEdge && coinFlip(verticalBias));
 
 			if (shouldClose) {
 				const rndCell = rndElement(run);
