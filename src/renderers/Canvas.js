@@ -30,7 +30,13 @@ export default class CanvasRenderer {
 		return this;
 	}
 
+	renderBackground() {
+		this.ctx.fillStyle = this.colorBackground;
+		this.ctx.fillRect(0, 0, this.width, this.height);
+	}
+
 	render() {
+		this.renderBackground();
 		const cellParts = this.grid.toCellParts(false);
 
 		for (let i = 0; i < cellParts.length; i++) {
