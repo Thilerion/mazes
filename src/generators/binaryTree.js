@@ -1,8 +1,7 @@
 import { DIR_NAMES } from '../constants';
 import { rndElement } from '../utils';
 
-export default function * binaryTreeAlgorithm(Maze, onCycle, onFinish) {
-	const { grid, config } = Maze;
+export default function * binaryTreeAlgorithm({ grid, config }, onCycle, onFinish) {
 	const { bias = "NE" } = config.generators.binaryTree;
 
 	const dirs = bias.split('').map(biasDir => DIR_NAMES[biasDir]);

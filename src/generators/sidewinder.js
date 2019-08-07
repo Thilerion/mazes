@@ -8,9 +8,7 @@ const coinFlip = (odds = 0.5) => {
 	return Math.random() < odds;
 }
 
-export default function* sidewinderAlgorithm(Maze, onCycle, onFinish) {
-	const { grid, config } = Maze;
-
+export default function* sidewinderAlgorithm({ grid, config }, onCycle, onFinish) {
 	const { verticalBias = 0.5 } = config.generators.sidewinder;
 	const g = grid.grid;
 
