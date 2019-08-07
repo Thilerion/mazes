@@ -2,8 +2,7 @@ import CanvasRenderer from './renderers/Canvas';
 import Maze from './Maze';
 import config from './config';
 
-import binaryTreeGenerator from './generators/binaryTree';
-import sidewinderGenerator from './generators/sidewinder';
+import * as Generator from './generators';
 
 const canvas = document.getElementById('maze');
 
@@ -13,4 +12,4 @@ let maze = new Maze({
 	canvas
 }).init().render();
 
-maze.generateMazeVisual(binaryTreeGenerator);
+maze.generateMazeVisual(Generator.sidewinder);
