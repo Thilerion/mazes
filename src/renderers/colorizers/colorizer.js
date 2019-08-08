@@ -25,7 +25,7 @@ export default class Colorizer {
 		const maxDistance = Math.max(...this.data.distanceMap.values());
 		const p = this.data.distanceMap.get(cell) / maxDistance;
 
-		const h = p * 256;
+		const h = p * 300;
 		console.log(h);
 		return `hsl(${h}, 100%, 50%)`;
 	}
