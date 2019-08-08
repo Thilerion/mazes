@@ -8,7 +8,11 @@ export default {
 		wall: 'black',
 		passage: 'white',
 		background: 'black',
-		passageNotGenerated: 'grey'
+
+		generation: {
+			currentCell: 'lightgreen',
+			unvisitedCell: 'grey'
+		}
 	},
 
 	generatorAnimFps: 60,

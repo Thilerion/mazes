@@ -1,5 +1,7 @@
 import { DIR_NAMES } from "../constants";
 
+import Colorizer from "./colorizers/base";
+
 const RENDER_WALLS = [DIR_NAMES.E, DIR_NAMES.S];
 
 // Slightly less efficient renderer than standard CanvasRenderer
@@ -20,7 +22,7 @@ export default class Canvas2Renderer {
 		this.cellSize = cellSize;
 		this.passageSize = cellSize - wallSize;
 
-		this.colors = this.config.colors;
+		this.colorizer = new Colorizer(config.colors);
 
 		this.canvas = canvas;
 		this.ctx = this.canvas.getContext('2d');
@@ -45,7 +47,7 @@ export default class Canvas2Renderer {
 	}
 
 	renderBackground() {
-		this.ctx.fillStyle = this.colors.background;
+		this.ctx.fillStyle = this.colorizer.getBackgroundColor();
 		this.ctx.fillRect(0, 0, this.width, this.height);
 	}
 
@@ -56,7 +58,8 @@ export default class Canvas2Renderer {
 		const originX = x * this.cellSize + this.wallSize;
 		const originY = y * this.cellSize + this.wallSize;
 
-		this.ctx.fillStyle = this.colors.passage;
+		this.ctx.fillStyle = this.colorizer.getCellColor(cell, this.grid);
+
 		this.ctx.fillRect(originX, originY, this.cellSize, this.cellSize);
 
 		walls.forEach(w => this.renderWall(originX, originY, w));
@@ -81,7 +84,7 @@ export default class Canvas2Renderer {
 			h = this.cellSize + this.wallSize;
 		}
 
-		this.ctx.fillStyle = this.colors.wall;
+		this.ctx.fillStyle = this.colorizer.getWallColor();
 		this.ctx.fillRect(x, y, w, h);
 	}
 

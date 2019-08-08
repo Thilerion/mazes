@@ -38,8 +38,8 @@ export default class Maze {
 	}	
 
 	generateMazeVisual(generatorFn) {
-		const onCycle = () => this.update();
-		const onFinish = () => this.update();
+		const onCycle = (updates) => this.update(updates);
+		const onFinish = (updates) => this.update(updates);
 
 		const generator = generatorFn(this, onCycle, onFinish);
 		this.generatorLoop(generator);

@@ -36,7 +36,9 @@ export default function* sidewinderAlgorithm({ grid, config }, onCycle, onFinish
 				cell.link(DIR_NAMES.E, true);
 			}
 
-			yield onCycle();
+			cell.initialized = true;
+
+			yield onCycle({current: g[y][x]});
 		}
 	}
 	return onFinish();

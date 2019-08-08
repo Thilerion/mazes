@@ -8,6 +8,8 @@ export default class Cell {
 		
 		this.links = {}; // [DIR_NAMES.E]: true
 		this.neighbors = {}; // [DIR_NAMES.E]: Cell object...
+
+		this.initialized = false;
 	}
 
 	get x() {
