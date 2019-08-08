@@ -6,9 +6,15 @@ export default class Distances {
 
 		this.values = new Map();
 
-		this.values.set(rootCell, 0);
-
 		this.maxDistance = null;
+	}
+
+	setRootCell(rootCell) {
+		this.rootCell = rootCell;
+		this.initialized = false;
+		this.values = new Map();
+		this.maxDistance = null;
+		return this;
 	}
 
 	getDistancePercentage(cell) {
@@ -17,6 +23,7 @@ export default class Distances {
 	}
 
 	calculate() {
+		this.values.set(this.rootCell, 0);
 		let frontier = [this.rootCell];
 		
 		while (frontier.length > 0) {
@@ -36,6 +43,7 @@ export default class Distances {
 
 		this.getMaxDistance();
 		this.initialized = true;
+		return this;
 	}
 
 	getMaxDistance() {
