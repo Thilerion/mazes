@@ -1,6 +1,6 @@
 import StringRenderer from "./renderers/String";
 import Grid from './models/Grid';
-import { Colorizer, GenerationColorizer } from './renderers/colorizers';
+import { COLORIZER_BASE, COLORIZER_GENERATION } from './renderers/colorizers';
 
 export default class Maze {
 	constructor({ canvas, config, Renderer }) {
@@ -24,8 +24,7 @@ export default class Maze {
 		this.generation = {
 			current: [],
 			inProgress: false,
-			done: false,
-			usingGenerationRenderer: false
+			done: false
 		}
 	}
 
@@ -49,10 +48,7 @@ export default class Maze {
 		this.generation.inProgress = false;
 		this.generation.done = true;
 
-		if (this.generation.usingGenerationRenderer) {
-			this.generation.usingGenerationRenderer = false;
-			this.renderer.colorizer = new Colorizer(this.config.colors);
-		}
+		this.renderer.setColorizer(COLORIZER_BASE);
 	}
 
 	generateMaze(generatorFn) {
@@ -85,7 +81,7 @@ export default class Maze {
 
 		this.startGeneration();
 
-		this.renderer.colorizer = new GenerationColorizer(this.config.colors);
+		this.renderer.setColorizer(COLORIZER_GENERATION);
 		this.generation.usingGenerationRenderer = true;
 
 		const generator = generatorFn(this, onCycle, onFinish);

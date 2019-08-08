@@ -1,6 +1,6 @@
 import { DIR_NAMES } from "../constants";
 
-import Colorizer from "./colorizers/base";
+import { COLORIZERS, COLORIZER_BASE, COLORIZER_GENERATION } from './colorizers';
 
 const RENDER_WALLS = [DIR_NAMES.E, DIR_NAMES.S];
 
@@ -22,7 +22,8 @@ export default class Canvas2Renderer {
 		this.cellSize = cellSize;
 		this.passageSize = cellSize - wallSize;
 
-		this.colorizer = new Colorizer(config.colors);
+		this.activeColorizer = COLORIZER_BASE;			
+		this.colorizer = this.createColorizer();
 
 		this.canvas = canvas;
 		this.ctx = this.canvas.getContext('2d');
@@ -91,5 +92,22 @@ export default class Canvas2Renderer {
 	update(Maze) {
 		this.grid = Maze.grid;
 		this.colorizer.update(Maze);
+	}
+
+	createColorizer() {
+		return new COLORIZERS[this.activeColorizer](this.config.colors);
+	}
+
+	setColorizer(name) {
+		if (this.activeColorizer === name) {
+			console.log("Colorizer is already active.");
+			return;
+		} else if (!Object.keys(COLORIZERS).includes(name)) {
+			console.warn("Colorizer does not exist!");
+			return;
+		}
+
+		this.activeColorizer = name;
+		this.colorizer = this.createColorizer();
 	}
 }
