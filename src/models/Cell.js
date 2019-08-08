@@ -10,6 +10,8 @@ export default class Cell {
 		this.neighbors = {}; // [DIR_NAMES.E]: Cell object...
 
 		this.initialized = false;
+		this.isRoot = false;
+		this.isFinish = false;
 	}
 
 	get x() {

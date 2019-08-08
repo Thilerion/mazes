@@ -4,13 +4,21 @@ export default {
 	cellSize: 40,
 	wallSize: 4,
 
+	mazeRoot: [0, 0],
+	mazeFinish: [-1, -1], // negative means relative to end
+
 	colors: {
 		wall: 'black',
 		passage: 'white',
 		background: 'black',
 
+		rootCell: 'lightgreen',
+		useRootCellColor: true,
+		finishCell: 'orange',
+		useFinishCellColor: false,
+
 		generation: {
-			currentCell: 'lightgreen',
+			currentCell: 'lightskyblue',
 			unvisitedCell: 'grey'
 		}
 	},

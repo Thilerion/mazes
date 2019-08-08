@@ -1,6 +1,8 @@
 import StringRenderer from "./renderers/String";
 import Grid from './models/Grid';
 import { COLORIZER_BASE, COLORIZER_GENERATION } from './renderers/colorizers';
+import Vec from "./models/Vec";
+import { DIR_NAMES } from "./constants";
 
 export default class Maze {
 	constructor({ canvas, config, Renderer }) {
@@ -21,6 +23,9 @@ export default class Maze {
 		this.stringRenderer = new StringRenderer(this);
 		this.renderer = new Renderer(this).init();
 
+		this.root = Vec.fromRelative(this.config.mazeRoot[0], this.config.mazeRoot[1], this.cols, this.rows);
+		this.finish = Vec.fromRelative(this.config.mazeFinish[0], this.config.mazeFinish[1], this.cols, this.rows);
+
 		this.generation = {
 			current: [],
 			inProgress: false,
@@ -29,7 +34,9 @@ export default class Maze {
 	}
 
 	init() {
-		this.grid.init().configureNeighbors();
+		this.grid.init();
+		this.grid.setRoot(this.root);
+		this.grid.setFinish(this.finish);
 		return this;
 	}
 

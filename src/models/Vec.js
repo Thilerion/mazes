@@ -15,4 +15,10 @@ export default class Vec {
 	minus(other) {
 		return new Vec(this.x - other.x, this.y - other.y);
 	}
+
+	static fromRelative(x, y, maxX, maxY) {
+		const relX = x < 0 ? maxX + x : x;
+		const relY = y < 0 ? maxY + y : y;
+		return new Vec(relX, relY);
+	}
 }

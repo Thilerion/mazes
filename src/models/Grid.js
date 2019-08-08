@@ -3,7 +3,7 @@ import { dirVectors } from '../utils';
 import { DIR_NAMES, WALL_CORNER, WALL_H, WALL_V, WALL_OPEN, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../constants';
 
 export default class Grid {
-	constructor({ cols, rows, config }) {
+	constructor({cols, rows, config}) {
 		this.cols = cols;
 		this.rows = rows;
 
@@ -13,6 +13,12 @@ export default class Grid {
 	}
 
 	init() {
+		this.createEmptyGrid().configureNeighbors();
+		console.log(this.grid);
+		return this;
+	}
+
+	createEmptyGrid() {
 		this.grid = [];
 		for (let y = 0; y < this.rows; y++) {
 			const row = [];
@@ -22,6 +28,13 @@ export default class Grid {
 			this.grid.push(row);
 		}
 		return this;
+	}
+
+	setRoot(vec) {
+		this.grid[vec.y][vec.x].isRoot = true;
+	}
+	setFinish(vec) {
+		this.grid[vec.y][vec.x].isFinish = true;
 	}
 
 	configureNeighbors() {
@@ -39,6 +52,8 @@ export default class Grid {
 		}
 		return this;
 	}
+
+
 
 	isInside(vec) {
 		const { x, y } = vec;

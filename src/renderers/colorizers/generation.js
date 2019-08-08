@@ -19,7 +19,7 @@ export default class ColorizerGeneration extends Colorizer {
 			return this.unvisitedCell;
 		}
 
-		return super.getCellColor(cell, grid);
+		return this.passage;
 	}
 
 	update(Maze) {
