@@ -1,4 +1,4 @@
-import { STATE_GENERATING, STATE_BASE } from "../../constants";
+import { showCurrentCell, showUnvisitedCell, showFinishCell, showRootCell } from './cells';
 
 export default class Colorizer {
 	constructor(Maze) {
@@ -10,22 +10,11 @@ export default class Colorizer {
 	}
 
 	getCellColor(cell) {
-		if (this.state === STATE_GENERATING) {
-			if (this.data.currentCells.includes(cell)) {
-				return this.colors.generation.currentCell;
-			}
-			if (!cell.initialized) {
-				return this.colors.generation.unvisitedCell;
-			}
-		}
-		if (this.state === STATE_BASE) {
-			if (cell.isFinish && this.colorSettings.showFinish) {
-				return this.colors.finishCell;
-			}
-			if (cell.isRoot && this.colorSettings.showRoot) {
-				return this.colors.rootCell;
-			}
-		}
+		if (showCurrentCell(cell, this)) return this.colors.generation.currentCell;
+		if (showUnvisitedCell(cell, this)) return this.colors.generation.unvisitedCell;
+		if (showFinishCell(cell, this)) return this.colors.finishCell;
+		if (showRootCell(cell, this)) return this.colors.rootCell;
+
 		return this.colors.passage;
 	}
 
