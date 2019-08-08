@@ -1,4 +1,4 @@
-import { showCurrentCell, showUnvisitedCell, showFinishCell, showRootCell } from './cells';
+import { showCurrentCell, showUnvisitedCell, showFinishCell, showRootCell, showDistanceColor } from './cells';
 
 export default class Colorizer {
 	constructor(Maze) {
@@ -12,10 +12,22 @@ export default class Colorizer {
 	getCellColor(cell) {
 		if (showCurrentCell(cell, this)) return this.colors.generation.currentCell;
 		if (showUnvisitedCell(cell, this)) return this.colors.generation.unvisitedCell;
+
+		if (showDistanceColor(cell, this)) return this.getDistanceColor(cell);
+
 		if (showFinishCell(cell, this)) return this.colors.finishCell;
 		if (showRootCell(cell, this)) return this.colors.rootCell;
 
 		return this.colors.passage;
+	}
+
+	getDistanceColor(cell) {
+		const maxDistance = Math.max(...this.data.distanceMap.values());
+		const p = this.data.distanceMap.get(cell) / maxDistance;
+
+		const h = p * 256;
+		console.log(h);
+		return `hsl(${h}, 100%, 50%)`;
 	}
 
 	getWallColor() {

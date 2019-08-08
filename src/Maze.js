@@ -2,6 +2,7 @@ import StringRenderer from "./renderers/String";
 import Grid from './models/Grid';
 import Vec from "./models/Vec";
 import { STATE_BASE, STATE_EMPTY, STATE_GENERATING } from "./constants";
+import Distances from "./solvers/Distances";
 
 export default class Maze {
 	constructor({ canvas, config, Renderer }) {
@@ -32,13 +33,18 @@ export default class Maze {
 			inProgress: false,
 			done: false
 		}
+
+		this.distances = null;
 	}
 
 	get renderData() {
 		return {
 			cellRoot: this.root,
 			cellFinish: this.finish,
-			currentCells: this.generation.current
+			currentCells: this.generation.current,
+
+			distancesCalculated: this.distances && this.distances.initialized,
+			distanceMap: this.distances.values
 		}
 	}
 
@@ -46,6 +52,9 @@ export default class Maze {
 		this.grid.init();
 		this.grid.setRoot(this.root);
 		this.grid.setFinish(this.finish);
+
+		this.distances = new Distances(this.grid.grid[this.root.y][this.root.x]);
+
 		return this;
 	}
 
@@ -61,6 +70,9 @@ export default class Maze {
 	finishGeneration() {
 		this.state = STATE_BASE;
 		this.generation.current = [];
+
+		this.distances.calculate();
+		console.log(this.distances);
 	}
 
 	generateMaze(generatorFn) {

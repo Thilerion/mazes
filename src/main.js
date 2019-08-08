@@ -13,4 +13,4 @@ let maze = new Maze({
 	canvas
 }).init().render();
 
-maze.generateMazeVisual(Generator.binaryTree);
+maze.generateMaze(Generator.binaryTree);

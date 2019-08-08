@@ -23,7 +23,8 @@ export default {
 
 	colorSettings: {
 		showRoot: true,
-		showFinish: true
+		showFinish: true,
+		showDistances: true
 	},
 
 	generatorAnimFps: 60,
