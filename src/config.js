@@ -2,12 +2,13 @@ export default {
 	width: 640,
 	height: 640,
 	cellSize: 40,
-	wallSize: 8,
+	wallSize: 4,
 
 	colors: {
 		wall: 'black',
 		passage: 'white',
-		background: 'black'
+		background: 'black',
+		passageNotGenerated: 'grey'
 	},
 
 	generatorAnimFps: 60,
