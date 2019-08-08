@@ -12,4 +12,4 @@ let maze = new Maze({
 	canvas
 }).init().render();
 
-maze.generateMazeVisual(Generator.sidewinder);
+maze.generateMaze(Generator.sidewinder);
