@@ -8,6 +8,9 @@ export default class ColorizerGeneration extends Colorizer {
 		this.currentCell = colors.generation.currentCell;
 		this.unvisitedCell = colors.generation.unvisitedCell;
 
+		this.useRootCellColor = false;
+		this.useFinishCellColor = false;
+
 		this.currentCells = [];
 	}
 
@@ -19,7 +22,7 @@ export default class ColorizerGeneration extends Colorizer {
 			return this.unvisitedCell;
 		}
 
-		return this.passage;
+		return super.getCellColor(cell, grid);
 	}
 
 	update(Maze) {
