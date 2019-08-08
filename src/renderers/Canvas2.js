@@ -88,7 +88,8 @@ export default class Canvas2Renderer {
 		this.ctx.fillRect(x, y, w, h);
 	}
 
-	update({grid}) {
-		this.grid = grid;
+	update(Maze) {
+		this.grid = Maze.grid;
+		this.colorizer.update(Maze);
 	}
 }

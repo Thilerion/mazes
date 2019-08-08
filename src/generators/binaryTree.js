@@ -17,7 +17,7 @@ export default function * binaryTreeAlgorithm({ grid, config }, onCycle, onFinis
 				cell.link(nb, true);
 			}
 			cell.initialized = true;
-			yield onCycle({current: g[y][x]});
+			yield onCycle({current: [cell]});
 		}
 	}
 

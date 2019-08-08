@@ -16,4 +16,8 @@ export default class Colorizer {
 	getBackgroundColor() {
 		return this.background;
 	}
+
+	update(Maze) {
+		
+	}
 }

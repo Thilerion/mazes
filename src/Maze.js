@@ -1,5 +1,6 @@
 import StringRenderer from "./renderers/String";
 import Grid from './models/Grid';
+import { Colorizer, GenerationColorizer } from './renderers/colorizers';
 
 export default class Maze {
 	constructor({ canvas, config, Renderer }) {
@@ -19,6 +20,13 @@ export default class Maze {
 		this.grid = new Grid(this);
 		this.stringRenderer = new StringRenderer(this);
 		this.renderer = new Renderer(this).init();
+
+		this.generation = {
+			current: [],
+			inProgress: false,
+			done: false,
+			usingGenerationRenderer: false
+		}
 	}
 
 	init() {
@@ -26,20 +34,59 @@ export default class Maze {
 		return this;
 	}
 
+	startGeneration() {
+		this.generation.current = [];
+		this.generation.inProgress = true;
+		this.generation.done = false;
+	}
+
+	updateGeneration({current = []} = {}) {
+		this.generation.current = current;
+	}
+
+	finishGeneration() {
+		this.generation.current = [];
+		this.generation.inProgress = false;
+		this.generation.done = true;
+
+		if (this.generation.usingGenerationRenderer) {
+			this.generation.usingGenerationRenderer = false;
+			this.renderer.colorizer = new Colorizer(this.config.colors);
+		}
+	}
+
 	generateMaze(generatorFn) {
-		const onCycle = () => { };
-		const onFinish = () => this.update();
+		const onCycle = (updates) => { 
+
+		};
+		const onFinish = (updates) => {
+			this.finishGeneration();
+			this.update(updates);
+		};
+
+		this.startGeneration();
 
 		const generator = generatorFn(this, onCycle, onFinish);
 		let done = false;
 		while (!done) {
 			done = generator.next().done;
 		}
-	}	
+	}
 
 	generateMazeVisual(generatorFn) {
-		const onCycle = (updates) => this.update(updates);
-		const onFinish = (updates) => this.update(updates);
+		const onCycle = (updates = {}) => {
+			this.updateGeneration(updates);
+			this.update(updates);
+		};
+		const onFinish = (updates) => {
+			this.finishGeneration();
+			this.update(updates);
+		};
+
+		this.startGeneration();
+
+		this.renderer.colorizer = new GenerationColorizer(this.config.colors);
+		this.generation.usingGenerationRenderer = true;
 
 		const generator = generatorFn(this, onCycle, onFinish);
 		this.generatorLoop(generator);
@@ -56,7 +103,7 @@ export default class Maze {
 		}
 	}
 
-	update() {
+	update(updates = {}) {
 		this.stringRenderer.update(this);
 		this.renderer.update(this);
 		this.render();

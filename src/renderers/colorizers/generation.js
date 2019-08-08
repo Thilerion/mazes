@@ -1,4 +1,5 @@
 import Colorizer from './base';
+import { objectIsCellInstance } from '../../utils';
 
 export default class ColorizerGeneration extends Colorizer {
 	constructor(colors) {
@@ -19,5 +20,18 @@ export default class ColorizerGeneration extends Colorizer {
 		}
 
 		return super.getCellColor(cell, grid);
+	}
+
+	update(Maze) {
+		try {
+			const cells = Maze.generation.current;
+			if (Array.isArray(cells)) {
+				this.currentCells = cells;
+			} else if (objectIsCellInstance(cells)) {
+				this.currentCells = [cells];
+			}
+		} catch {
+			this.currentCells = [];
+		}
 	}
 }
