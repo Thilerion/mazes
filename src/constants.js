@@ -14,3 +14,7 @@ export const PASSAGE_BLOCKED = "#";
 
 export const CLOSED_PARTS = [WALL_CORNER, WALL_H, WALL_V, PASSAGE_BLOCKED];
 export const OPEN_PARTS = [WALL_OPEN, PASSAGE_OPEN];
+
+export const STATE_EMPTY = "empty"; // grid created, maze not generated
+export const STATE_GENERATING = "generating"; // maze is being generated
+export const STATE_BASE = "base"; // maze is done generating

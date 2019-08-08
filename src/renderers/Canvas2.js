@@ -1,6 +1,6 @@
 import { DIR_NAMES } from "../constants";
 
-import { COLORIZERS, COLORIZER_BASE, COLORIZER_GENERATION } from './colorizers';
+import Colorizer from './colorizers/colorizer';
 
 const RENDER_WALLS = [DIR_NAMES.E, DIR_NAMES.S];
 
@@ -8,7 +8,8 @@ const RENDER_WALLS = [DIR_NAMES.E, DIR_NAMES.S];
 // However, is easier to work with for coloring individual cells and 
 //		adding text or other visuals to cells and walls.
 export default class Canvas2Renderer {
-	constructor({ grid, config, canvas, width, height, cols, rows, wallSize, cellSize }) {
+	constructor(Maze) {
+		const { grid, config, canvas, width, height, cols, rows, wallSize, cellSize } = Maze;
 		this.grid = grid;
 		this.config = config;
 
@@ -21,9 +22,8 @@ export default class Canvas2Renderer {
 		this.wallSize = wallSize;
 		this.cellSize = cellSize;
 		this.passageSize = cellSize - wallSize;
-
-		this.activeColorizer = COLORIZER_BASE;			
-		this.colorizer = this.createColorizer();
+		
+		this.colorizer = new Colorizer(Maze);
 
 		this.canvas = canvas;
 		this.ctx = this.canvas.getContext('2d');
@@ -92,22 +92,5 @@ export default class Canvas2Renderer {
 	update(Maze) {
 		this.grid = Maze.grid;
 		this.colorizer.update(Maze);
-	}
-
-	createColorizer() {
-		return new COLORIZERS[this.activeColorizer](this.config.colors);
-	}
-
-	setColorizer(name) {
-		if (this.activeColorizer === name) {
-			console.log("Colorizer is already active.");
-			return;
-		} else if (!Object.keys(COLORIZERS).includes(name)) {
-			console.warn("Colorizer does not exist!");
-			return;
-		}
-
-		this.activeColorizer = name;
-		this.colorizer = this.createColorizer();
 	}
 }

@@ -14,7 +14,6 @@ export default class Grid {
 
 	init() {
 		this.createEmptyGrid().configureNeighbors();
-		console.log(this.grid);
 		return this;
 	}
 

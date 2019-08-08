@@ -13,14 +13,17 @@ export default {
 		background: 'black',
 
 		rootCell: 'lightgreen',
-		useRootCellColor: true,
 		finishCell: 'orange',
-		useFinishCellColor: false,
 
 		generation: {
 			currentCell: 'lightskyblue',
 			unvisitedCell: 'grey'
 		}
+	},
+
+	colorSettings: {
+		showRoot: true,
+		showFinish: true
 	},
 
 	generatorAnimFps: 60,

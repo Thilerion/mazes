@@ -1,8 +1,7 @@
 import StringRenderer from "./renderers/String";
 import Grid from './models/Grid';
-import { COLORIZER_BASE, COLORIZER_GENERATION } from './renderers/colorizers';
 import Vec from "./models/Vec";
-import { DIR_NAMES } from "./constants";
+import { STATE_BASE, STATE_EMPTY, STATE_GENERATING } from "./constants";
 
 export default class Maze {
 	constructor({ canvas, config, Renderer }) {
@@ -26,10 +25,20 @@ export default class Maze {
 		this.root = Vec.fromRelative(this.config.mazeRoot[0], this.config.mazeRoot[1], this.cols, this.rows);
 		this.finish = Vec.fromRelative(this.config.mazeFinish[0], this.config.mazeFinish[1], this.cols, this.rows);
 
+		this.state = STATE_EMPTY;
+
 		this.generation = {
 			current: [],
 			inProgress: false,
 			done: false
+		}
+	}
+
+	get renderData() {
+		return {
+			cellRoot: this.root,
+			cellFinish: this.finish,
+			currentCells: this.generation.current
 		}
 	}
 
@@ -41,9 +50,8 @@ export default class Maze {
 	}
 
 	startGeneration() {
+		this.state = STATE_GENERATING;
 		this.generation.current = [];
-		this.generation.inProgress = true;
-		this.generation.done = false;
 	}
 
 	updateGeneration({current = []} = {}) {
@@ -51,11 +59,8 @@ export default class Maze {
 	}
 
 	finishGeneration() {
+		this.state = STATE_BASE;
 		this.generation.current = [];
-		this.generation.inProgress = false;
-		this.generation.done = true;
-
-		this.renderer.setColorizer(COLORIZER_BASE);
 	}
 
 	generateMaze(generatorFn) {
@@ -88,9 +93,6 @@ export default class Maze {
 
 		this.startGeneration();
 
-		this.renderer.setColorizer(COLORIZER_GENERATION);
-		this.generation.usingGenerationRenderer = true;
-
 		const generator = generatorFn(this, onCycle, onFinish);
 		this.generatorLoop(generator);
 	}
@@ -107,7 +109,6 @@ export default class Maze {
 	}
 
 	update(updates = {}) {
-		this.stringRenderer.update(this);
 		this.renderer.update(this);
 		this.render();
 	}
