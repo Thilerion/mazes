@@ -1,4 +1,4 @@
-import { showCurrentCell, showUnvisitedCell, showFinishCell, showRootCell, showDistanceColor } from './cells';
+import { showCurrentCell, showUnvisitedCell, showFinishCell, showRootCell, showDistanceColor, showHuntAndKillRowCell } from './cells';
 
 export default class Colorizer {
 	constructor(Maze) {
@@ -19,6 +19,12 @@ export default class Colorizer {
 		if (showRootCell(cell, this)) return this.colors.rootCell;
 
 		return this.colors.passage;
+	}
+
+	getCellOverlayColor(cell) {
+		if (showHuntAndKillRowCell(cell, this)) return this.colors.generation.huntAndKillRow;
+
+		return null;
 	}
 
 	getDistanceColor(cell) {

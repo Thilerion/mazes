@@ -17,7 +17,9 @@ export default {
 
 		generation: {
 			currentCell: 'lightskyblue',
-			unvisitedCell: '#666'
+			unvisitedCell: '#666',
+
+			huntAndKillRow: 'rgba(250, 100, 100, 0.2)'
 		}
 	},
 
@@ -41,7 +43,8 @@ export default {
 			animateConnection: true,
 		},
 		huntAndKill: {
-			animateHunting: true
+			animateHunting: true,
+			animateHuntingRowsOnly: true
 		}
 	}
 }

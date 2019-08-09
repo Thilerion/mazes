@@ -3,7 +3,7 @@ import { rndElement, rndElement2D, withoutElement } from "../utils";
 export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinish) {
 	
 	const g = grid.grid;
-	const { animateHunting = true } = config.generators.huntAndKill;
+	const { animateHunting = true, animateHuntingRowsOnly = true } = config.generators.huntAndKill;
 
 	let currentCell = rndElement2D(g);
 	currentCell.initialized = true;
@@ -33,12 +33,19 @@ export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinis
 
 			for (let y = 0; y < g.length; y++) {
 				if (currentCell) break;
+
+				if (animateHunting && animateHuntingRowsOnly) {
+					// yield all cells in rows as "current"
+					let rowCells = [...g[y]];
+					yield onCycle({ huntAndKillRow: rowCells });
+				}
+
 				for (let x = 0; x < g[y].length; x++) {
 					if (currentCell) break;
 
 					const cell = g[y][x];
 
-					if (animateHunting) {
+					if (animateHunting && !animateHuntingRowsOnly) {
 						yield onCycle({ current: [cell] });
 					}
 
@@ -51,6 +58,13 @@ export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinis
 
 					if (visitedNeighbors.length > 0) {
 						currentCell = cell;
+
+						if (animateHunting && animateHuntingRowsOnly) {
+							// after the row has been shown,
+							// and a cell has been found in that row
+							// yield that cell
+							yield onCycle({ current: [currentCell] });
+						}
 
 						const nb = rndElement(visitedNeighbors);
 						const nbDir = cell.getDirectionToNeighbor(nb);

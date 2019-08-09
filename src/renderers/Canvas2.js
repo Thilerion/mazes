@@ -60,10 +60,20 @@ export default class Canvas2Renderer {
 		const originY = y * this.cellSize + this.wallSize;
 
 		this.ctx.fillStyle = this.colorizer.getCellColor(cell, this.grid);
-
 		this.ctx.fillRect(originX, originY, this.cellSize, this.cellSize);
 
+		this.renderCellOverlay(cell, originX, originY, this.cellSize);
+
 		walls.forEach(w => this.renderWall(originX, originY, w));
+	}
+
+	renderCellOverlay(cell, x, y, size) {
+		const overlayColor = this.colorizer.getCellOverlayColor(cell);
+		if (!overlayColor) {
+			return;
+		}
+		this.ctx.fillStyle = overlayColor;
+		this.ctx.fillRect(x, y, size, size);
 	}
 
 	renderWall(cellX, cellY, wall) {

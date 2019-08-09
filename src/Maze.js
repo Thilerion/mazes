@@ -30,6 +30,7 @@ export default class Maze {
 
 		this.generation = {
 			current: [],
+			huntAndKillRow: [],
 			inProgress: false,
 			done: false
 		}
@@ -49,6 +50,8 @@ export default class Maze {
 			cellRoot: this.root,
 			cellFinish: this.finish,
 			currentCells: this.generation.current,
+
+			huntAndKillRow: this.generation.huntAndKillRow,
 
 			distancesCalculated: this.solving && this.solving.complete,
 			distanceMap: this.solving.values
@@ -137,15 +140,18 @@ export default class Maze {
 	startGeneration() {
 		this.state = STATE_GENERATING;
 		this.generation.current = [];
+		this.generation.huntAndKillRow = [];
 	}
 
-	updateGeneration({current = []} = {}) {
+	updateGeneration({current = [], huntAndKillRow = []} = {}) {
 		this.generation.current = current;
+		this.generation.huntAndKillRow = huntAndKillRow;
 	}
 
 	finishGeneration() {
 		this.state = STATE_BASE;
 		this.generation.current = [];
+		this.generation.huntAndKillRow = [];
 	}
 
 	generateMaze(generatorFn) {

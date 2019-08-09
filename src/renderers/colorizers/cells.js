@@ -27,3 +27,7 @@ export const showDistanceColor = (cell, { state, data, colorSettings }) => {
 	}
 	return false;
 }
+
+export const showHuntAndKillRowCell = (cell, { state, data }) => {
+	return isGenerating(state) && data.huntAndKillRow.includes(cell);
+};
