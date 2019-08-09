@@ -17,7 +17,7 @@ export default {
 
 		generation: {
 			currentCell: 'lightskyblue',
-			unvisitedCell: 'grey'
+			unvisitedCell: '#666'
 		}
 	},
 
