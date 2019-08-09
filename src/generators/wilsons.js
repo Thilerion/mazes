@@ -8,7 +8,9 @@ import { rndElementSet, rndElement } from '../utils';
 // PROS: Completely random, no bias
 // CONS: Slow to start, quick to finish (as opposed to aldousBroder which is the other way around)
 
-export default function* wilsonsAlgorithm({ grid }, onCycle, onFinish) {
+export default function* wilsonsAlgorithm({ grid, config }, onCycle, onFinish) {
+	const { animateConnection = true } = config.generators.wilsons;
+
 	// INITIALIZATION
 	let unvisited = [];
 	grid.forEachCell((cell, x, y) => {
@@ -30,6 +32,7 @@ export default function* wilsonsAlgorithm({ grid }, onCycle, onFinish) {
 		yield onCycle({current: path});
 
 		while (unvisited.includes(cell)) {
+			yield onCycle({current: path});
 			cell = rndElement(Object.values(cell.neighbors));
 			
 			const pathIdx = path.indexOf(cell);
@@ -38,7 +41,6 @@ export default function* wilsonsAlgorithm({ grid }, onCycle, onFinish) {
 			} else {
 				path.push(cell);
 			}
-			yield onCycle({current: path});
 		}
 
 		for (let i = 0; i < path.length - 1; i++) {
@@ -51,7 +53,9 @@ export default function* wilsonsAlgorithm({ grid }, onCycle, onFinish) {
 			const unvisitedIdx = unvisited.indexOf(pCell);
 			unvisited.splice(unvisitedIdx, 1);
 
-			yield onCycle({ current: path });
+			if (animateConnection) {
+				yield onCycle({ current: path });
+			}
 		}
 	}
 

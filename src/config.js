@@ -1,7 +1,7 @@
 export default {
 	width: 640,
 	height: 640,
-	cellSize: 40,
+	cellSize: 80,
 	wallSize: 4,
 
 	mazeRoot: [0, 0],
@@ -27,7 +27,7 @@ export default {
 		showDistances: true
 	},
 
-	generatorAnimFps: 60,
+	generatorAnimFps: 30,
 	solverAnimFps: 20,
 
 	generators: {
@@ -36,6 +36,10 @@ export default {
 		},
 		sidewinder: {
 			verticalBias: 0.5, // lower for longer horizontal paths
+		},
+		wilsons: {
+			animateConnection: true,
+
 		}
 	}
 }
