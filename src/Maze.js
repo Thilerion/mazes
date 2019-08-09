@@ -5,7 +5,7 @@ import { STATE_BASE, STATE_EMPTY, STATE_GENERATING, STATE_SOLVING } from "./cons
 import Distances from "./solvers/Distances";
 
 export default class Maze {
-	constructor({ canvas, config, Renderer }) {
+	constructor({ canvas, config, Renderer, analyzers }) {
 		this.config = config;
 
 		this.canvas = canvas;
@@ -22,6 +22,7 @@ export default class Maze {
 		this.grid = new Grid(this);
 		this.stringRenderer = new StringRenderer(this);
 		this.renderer = new Renderer(this).init();
+		this.analyzers = analyzers;
 
 		this.root = Vec.fromRelative(this.config.mazeRoot[0], this.config.mazeRoot[1], this.cols, this.rows);
 		this.finish = Vec.fromRelative(this.config.mazeFinish[0], this.config.mazeFinish[1], this.cols, this.rows);
@@ -152,6 +153,10 @@ export default class Maze {
 		this.state = STATE_BASE;
 		this.generation.current = [];
 		this.generation.huntAndKillRow = [];
+
+		if (this.config.generators.performPostAnalysis) {
+			this.analyze();
+		}
 	}
 
 	generateMaze(generatorFn) {
@@ -197,6 +202,11 @@ export default class Maze {
 				setTimeout(() => this.generatorLoop(fn), 1000 / fps);
 			}
 		}
+	}
+
+	analyze() {
+		const results = this.analyzers.map(fn => fn(this.grid));
+		return results;
 	}
 
 	update(updates = {}) {

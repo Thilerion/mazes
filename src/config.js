@@ -45,6 +45,8 @@ export default {
 		huntAndKill: {
 			animateHunting: true,
 			animateHuntingRowsOnly: true
-		}
+		},
+
+		performPostAnalysis: true
 	}
 }
