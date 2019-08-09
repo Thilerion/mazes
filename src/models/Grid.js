@@ -11,6 +11,10 @@ export default class Grid {
 		
 		this.grid = null;
 	}
+	
+	get size() {
+		return this.cols * this.rows;
+	}
 
 	init() {
 		this.createEmptyGrid().configureNeighbors();

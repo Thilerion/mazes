@@ -26,6 +26,10 @@ export default class Cell {
 		return Object.values(DIR_NAMES).filter(dir => !links.includes(dir));
 	}
 
+	get numLinks() {
+		return Object.keys(this.links).filter(key => this.links[key]).length;
+	}
+
 	get amountNeighbors() {
 		return Object.keys(this.neighbors).length;
 	}
