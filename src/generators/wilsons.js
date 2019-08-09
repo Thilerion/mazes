@@ -48,7 +48,8 @@ export default function* wilsonsAlgorithm({ grid }, onCycle, onFinish) {
 			pCell.link(dir);
 			pCell.initialized = true;
 
-			unvisited = unvisited.filter(c => c !== pCell);
+			const unvisitedIdx = unvisited.indexOf(pCell);
+			unvisited.splice(unvisitedIdx, 1);
 
 			yield onCycle({ current: path });
 		}
