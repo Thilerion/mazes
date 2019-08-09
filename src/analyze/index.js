@@ -4,4 +4,14 @@ const analyzers = [
 	findDeadEnds
 ];
 
-export default analyzers;
+export default class Analyze {
+	constructor(config, analysisList = analyzers) {
+		this.performPostAnalysis = config.generators.performPostAnalysis;
+
+		this.analyzers = analysisList;
+	}
+
+	postGeneration(Grid) {
+		return this.analyzers.map(fn => fn(Grid));
+	}
+}
