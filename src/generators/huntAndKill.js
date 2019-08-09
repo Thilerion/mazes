@@ -7,10 +7,11 @@ export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinis
 
 	let currentCell = rndElement2D(g);
 	currentCell.initialized = true;
+	let nUnvisited = grid.size - 1;
 
 	yield onCycle({ current: [currentCell] });
 
-	while (currentCell) {
+	while (nUnvisited > 0) {
 		const unvisitedNeighbors = currentCell.neighborsList.filter(nb => !nb.initialized);
 
 		if (unvisitedNeighbors.length > 0) {
@@ -20,6 +21,7 @@ export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinis
 			currentCell.link(dir);
 			currentCell = neighbor;
 			currentCell.initialized = true;
+			nUnvisited -= 1;
 
 			yield onCycle({ current: [currentCell] });
 		} else {
@@ -55,6 +57,7 @@ export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinis
 
 						currentCell.link(nbDir);
 						currentCell.initialized = true;
+						nUnvisited -= 1;
 					}
 				}
 			}
