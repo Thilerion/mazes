@@ -29,6 +29,8 @@ export const rndElement2D = d2Arr => {
 	return row[rnd(row.length)];
 }
 
+export const rndElementSet = setObj => Array.from(setObj)[rnd(setObj.size)];
+
 export const objectIsCellInstance = obj => {
 	return obj instanceof Cell;
 }

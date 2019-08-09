@@ -45,6 +45,15 @@ export default class Cell {
 		return Object.keys(this.neighbors).includes(dir);
 	}
 
+	getDirectionToNeighbor(cell) {
+		for (let [dir, nb] of Object.entries(this.neighbors)) {
+			if (nb === cell) {
+				return dir;
+			}
+		}
+		return null;
+	}
+
 	setNeighbor(cell, direction) {
 		this.neighbors[direction] = cell;
 	}
