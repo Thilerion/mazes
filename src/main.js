@@ -15,6 +15,6 @@ let maze = new Maze({
 	canvas
 }).init().render();
 
-maze.generateMazeVisual(Generator.wilsons);
+maze.generateMazeVisual(Generator.huntAndKill);
 
 // maze.solveMazeVisual(DistanceSolver);

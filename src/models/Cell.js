@@ -54,6 +54,10 @@ export default class Cell {
 		return null;
 	}
 
+	get neighborsList() {
+		return Object.values(this.neighbors);
+	}
+
 	setNeighbor(cell, direction) {
 		this.neighbors[direction] = cell;
 	}

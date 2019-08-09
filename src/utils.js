@@ -31,6 +31,10 @@ export const rndElement2D = d2Arr => {
 
 export const rndElementSet = setObj => Array.from(setObj)[rnd(setObj.size)];
 
+export const withoutElement = (toRemove, arr) => {
+	return arr.filter(el => el !== toRemove);
+}
+
 export const objectIsCellInstance = obj => {
 	return obj instanceof Cell;
 }

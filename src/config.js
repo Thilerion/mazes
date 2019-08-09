@@ -27,7 +27,7 @@ export default {
 		showDistances: true
 	},
 
-	generatorAnimFps: 30,
+	generatorAnimFps: 5,
 	solverAnimFps: 20,
 
 	generators: {
@@ -39,7 +39,9 @@ export default {
 		},
 		wilsons: {
 			animateConnection: true,
-
+		},
+		huntAndKill: {
+			animateHunting: true
 		}
 	}
 }
