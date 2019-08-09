@@ -18,3 +18,4 @@ export const OPEN_PARTS = [WALL_OPEN, PASSAGE_OPEN];
 export const STATE_EMPTY = "empty"; // grid created, maze not generated
 export const STATE_GENERATING = "generating"; // maze is being generated
 export const STATE_BASE = "base"; // maze is done generating
+export const STATE_SOLVING = "solving"; // maze is currently solving with a specified algorithm

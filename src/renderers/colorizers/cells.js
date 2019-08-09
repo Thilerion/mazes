@@ -1,7 +1,8 @@
-import { STATE_GENERATING, STATE_BASE } from '../../constants';
+import { STATE_GENERATING, STATE_BASE, STATE_SOLVING } from '../../constants';
 
 const isGenerating = state => state === STATE_GENERATING;
 const isBase = state => state === STATE_BASE;
+const isSolving = state => state === STATE_SOLVING;
 
 export const showCurrentCell = (cell, { data, state }) => {
 	return isGenerating(state) && data.currentCells.includes(cell);
@@ -11,12 +12,18 @@ export const showUnvisitedCell = (cell, { state }) => {
 }
 
 export const showFinishCell = (cell, {state, colorSettings}) => {
-	return !isGenerating(state) && cell.isFinish && colorSettings.showFinish;
+	return !isGenerating(state) && !isSolving(state) && cell.isFinish && colorSettings.showFinish;
 }
 export const showRootCell = (cell, {state, colorSettings}) => {
-	return !isGenerating(state) && cell.isRoot && colorSettings.showRoot;
+	return !isGenerating(state) && !isSolving(state) && cell.isRoot && colorSettings.showRoot;
 }
 
 export const showDistanceColor = (cell, { state, data, colorSettings }) => {
-	return isBase(state) && colorSettings.showDistances && data.distancesCalculated;
+	if (isBase(state)) {
+		return colorSettings.showDistances && data.distancesCalculated;
+	}
+	if (isSolving(state)) {
+		return colorSettings.showDistances && data.distanceMap.has(cell);
+	}
+	return false;
 }

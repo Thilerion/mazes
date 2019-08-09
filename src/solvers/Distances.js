@@ -17,11 +17,6 @@ export default class Distances {
 		return this;
 	}
 
-	getDistancePercentage(cell) {
-		const d = this.values.get(cell);
-		return d / this.maxDistance;
-	}
-
 	calculate() {
 		this.values.set(this.rootCell, 0);
 		let frontier = [this.rootCell];
@@ -44,9 +39,5 @@ export default class Distances {
 		this.getMaxDistance();
 		this.initialized = true;
 		return this;
-	}
-
-	getMaxDistance() {
-		this.maxDistance = Math.max(...this.values.values());
 	}
 }

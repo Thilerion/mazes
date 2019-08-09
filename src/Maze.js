@@ -1,7 +1,7 @@
 import StringRenderer from "./renderers/String";
 import Grid from './models/Grid';
 import Vec from "./models/Vec";
-import { STATE_BASE, STATE_EMPTY, STATE_GENERATING } from "./constants";
+import { STATE_BASE, STATE_EMPTY, STATE_GENERATING, STATE_SOLVING } from "./constants";
 import Distances from "./solvers/Distances";
 
 export default class Maze {
@@ -34,17 +34,24 @@ export default class Maze {
 			done: false
 		}
 
-		this.distances = null;
+		this.solving = {
+			current: [],
+			values: null,
+			complete: false
+		}
 	}
 
 	get renderData() {
 		return {
+			cols: this.cols,
+			rows: this.rows,
+			
 			cellRoot: this.root,
 			cellFinish: this.finish,
 			currentCells: this.generation.current,
 
-			distancesCalculated: this.distances && this.distances.initialized,
-			distanceMap: this.distances.values
+			distancesCalculated: this.solving && this.solving.complete,
+			distanceMap: this.solving.values
 		}
 	}
 
@@ -53,9 +60,78 @@ export default class Maze {
 		this.grid.setRoot(this.root);
 		this.grid.setFinish(this.finish);
 
-		this.distances = new Distances(this.grid.grid[this.root.y][this.root.x]);
+		// this.distances = new Distances(this.grid.grid[this.root.y][this.root.x]);
 
 		return this;
+	}
+
+	startSolving() {
+		this.state = STATE_SOLVING;
+		this.solving.current = [];
+		this.solving.values = new Map();
+		this.solving.complete = false;
+
+	}
+	updateSolving({current, values} = {}) {
+		if (current) {
+			this.solving.current = current;
+		}
+		if (values) {
+			this.solving.values = values;
+		}
+	}
+	finishSolving() {
+		this.state = STATE_BASE;
+		this.solving.current = [];
+		this.solving.complete = true;
+	}
+
+	solveMaze(solverFn) {
+		const onCycle = ({ current, values }) => {
+			
+		};
+		const onFinish = ({ values }) => {
+			this.finishSolving();
+			this.solving.values = values;
+			this.update();
+		}
+
+		this.startSolving();
+
+		const rootCell = this.grid.grid[this.root.y][this.root.x];
+		const solver = solverFn({ rootCell }, onCycle, onFinish);
+		let done = false;
+		while (!done) {
+			done = solver.next().done;
+		}
+	}
+	solveMazeVisual(solverFn) {
+		const onCycle = ({ current, values }) => {
+			this.updateSolving({ current, values });
+			this.update();
+		};
+		const onFinish = ({ values }) => {
+			this.finishSolving();
+			this.solving.values = values;
+			this.update();
+		}
+
+		this.startSolving();
+
+		const rootCell = this.grid.grid[this.root.y][this.root.x];
+		const solver = solverFn({ rootCell }, onCycle, onFinish);
+		
+		this.solveLoop(solver);
+	}
+	solveLoop(fn) {
+		if (!fn.next().done) {
+			const fps = this.config.solverAnimFps;
+			if (fps >= 60) {
+				requestAnimationFrame(() => this.solveLoop(fn));
+			} else {
+				setTimeout(() => this.solveLoop(fn), 1000 / fps);
+			}
+		}
 	}
 
 	startGeneration() {
@@ -70,9 +146,6 @@ export default class Maze {
 	finishGeneration() {
 		this.state = STATE_BASE;
 		this.generation.current = [];
-
-		this.distances.calculate();
-		console.log(this.distances);
 	}
 
 	generateMaze(generatorFn) {

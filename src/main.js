@@ -5,6 +5,8 @@ import config from './config';
 
 import * as Generator from './generators';
 
+import DistanceSolver from './solvers/distance';
+
 const canvas = document.getElementById('maze');
 
 let maze = new Maze({
@@ -14,3 +16,5 @@ let maze = new Maze({
 }).init().render();
 
 maze.generateMaze(Generator.binaryTree);
+
+maze.solveMazeVisual(DistanceSolver);

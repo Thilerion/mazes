@@ -28,6 +28,7 @@ export default {
 	},
 
 	generatorAnimFps: 60,
+	solverAnimFps: 20,
 
 	generators: {
 		binaryTree: {
