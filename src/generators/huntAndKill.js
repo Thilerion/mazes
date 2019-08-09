@@ -5,8 +5,7 @@ export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinis
 	const g = grid.grid;
 	const { animateHunting = true, animateHuntingRowsOnly = true } = config.generators.huntAndKill;
 
-	let currentCell = rndElement2D(g);
-	currentCell.initialized = true;
+	let currentCell = rndElement2D(g).init();
 	let nUnvisited = grid.size - 1;
 
 	yield onCycle({ current: [currentCell] });
@@ -19,8 +18,7 @@ export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinis
 			const dir = currentCell.getDirectionToNeighbor(neighbor);
 
 			currentCell.link(dir);
-			currentCell = neighbor;
-			currentCell.initialized = true;
+			currentCell = neighbor.init();
 			nUnvisited -= 1;
 
 			yield onCycle({ current: [currentCell] });
@@ -70,7 +68,7 @@ export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinis
 						const nbDir = cell.getDirectionToNeighbor(nb);
 
 						currentCell.link(nbDir);
-						currentCell.initialized = true;
+						currentCell.init();
 						nUnvisited -= 1;
 					}
 				}

@@ -17,6 +17,6 @@ let maze = new Maze({
 	canvas
 }).init().render();
 
-maze.generateMaze(Generator.huntAndKill);
+maze.generateMazeVisual(Generator.recursiveBacktracker);
 
-maze.solveMazeVisual(DistanceSolver);
+// maze.solveMaze(DistanceSolver);

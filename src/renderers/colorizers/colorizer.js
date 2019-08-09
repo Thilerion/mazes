@@ -1,4 +1,4 @@
-import { showCurrentCell, showUnvisitedCell, showFinishCell, showRootCell, showDistanceColor, showHuntAndKillRowCell } from './cells';
+import { showCurrentCell, showUnvisitedCell, showFinishCell, showRootCell, showDistanceColor, showHuntAndKillRowCell, showInStackCell } from './cells';
 
 export default class Colorizer {
 	constructor(Maze) {
@@ -10,6 +10,7 @@ export default class Colorizer {
 	}
 
 	getCellColor(cell) {
+		if (showInStackCell(cell, this)) return this.colors.generation.recursiveInStackCells;
 		if (showCurrentCell(cell, this)) return this.colors.generation.currentCell;
 		if (showUnvisitedCell(cell, this)) return this.colors.generation.unvisitedCell;
 

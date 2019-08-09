@@ -41,6 +41,14 @@ export default class Cell {
 		return n === 2 || n === 3;
 	}
 
+	init() {
+		if (this.initialized) {
+			console.warn("Cell is already initialized!");
+		}
+		this.initialized = true;
+		return this;
+	}
+
 	hasNeighborInDirection(dir) {
 		return Object.keys(this.neighbors).includes(dir);
 	}

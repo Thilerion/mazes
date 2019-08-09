@@ -19,7 +19,8 @@ export default {
 			currentCell: 'lightskyblue',
 			unvisitedCell: '#666',
 
-			huntAndKillRow: 'rgba(250, 100, 100, 0.2)'
+			huntAndKillRow: 'rgba(250, 100, 100, 0.2)',
+			recursiveInStackCells: 'lightcyan'
 		}
 	},
 
@@ -29,7 +30,7 @@ export default {
 		showDistances: true
 	},
 
-	generatorAnimFps: 5,
+	generatorAnimFps: 30,
 	solverAnimFps: 20,
 
 	generators: {
@@ -45,6 +46,9 @@ export default {
 		huntAndKill: {
 			animateHunting: true,
 			animateHuntingRowsOnly: true
+		},
+		recursiveBacktracker: {
+			finishBacktracking: true
 		}
 	},
 

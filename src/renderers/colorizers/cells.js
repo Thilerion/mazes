@@ -31,3 +31,7 @@ export const showDistanceColor = (cell, { state, data, colorSettings }) => {
 export const showHuntAndKillRowCell = (cell, { state, data }) => {
 	return isGenerating(state) && data.huntAndKillRow.includes(cell);
 };
+
+export const showInStackCell = (cell, { state, data }) => {
+	return isGenerating(state) && !data.currentCells.includes(cell) && data.inStack.includes(cell);
+}
