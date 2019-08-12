@@ -21,8 +21,6 @@ export default {
 
 			huntAndKillRow: 'rgba(250, 100, 100, 0.2)',
 			recursiveInStackCells: 'lightcyan',
-
-			seed: 1
 		}
 	},
 
@@ -34,6 +32,8 @@ export default {
 
 	generatorAnimFps: 30,
 	solverAnimFps: 20,
+
+	seed: 1,
 
 	generators: {
 		binaryTree: {

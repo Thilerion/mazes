@@ -3,6 +3,11 @@ import Canvas2Renderer from './renderers/Canvas2';
 import Maze from './Maze';
 import config from './config';
 import Analyze from './analyze';
+import { reseed } from './utils/random';
+
+if (process.env.NODE_ENV === "development") {
+	reseed(config.seed);
+}
 
 import * as Generator from './generators';
 
@@ -17,6 +22,5 @@ let maze = new Maze({
 	canvas
 }).init().render();
 
-maze.generateMazeVisual(Generator.recursiveBacktracker);
-
-// maze.solveMaze(DistanceSolver);
+maze.generateMaze(Generator.recursiveBacktracker);
+maze.solveMazeVisual(DistanceSolver);
