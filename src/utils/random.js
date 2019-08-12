@@ -12,7 +12,7 @@ export const reseed = (seed = Math.random()) => {
 	seededRnd = mulberry32(seed);
 }
 
-export const rnd = (maxExcl) => Math.floor(seededRnd() * maxExcl);
+export const rnd = (maxExcl = 1) => Math.floor(seededRnd() * maxExcl);
 
 export const rndElement = arr => arr[rnd(arr.length)];
 
