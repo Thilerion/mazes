@@ -64,6 +64,7 @@ export default class Canvas2Renderer {
 
 		this.renderCellOverlay(cell, originX, originY, this.cellSize);
 
+		this.ctx.fillStyle = this.colorizer.getWallColor();
 		walls.forEach(w => this.renderWall(originX, originY, w));
 	}
 
@@ -95,7 +96,6 @@ export default class Canvas2Renderer {
 			h = this.cellSize + this.wallSize;
 		}
 
-		this.ctx.fillStyle = this.colorizer.getWallColor();
 		this.ctx.fillRect(x, y, w, h);
 	}
 
