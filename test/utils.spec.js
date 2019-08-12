@@ -1,5 +1,6 @@
 import { DIR_NAMES } from '../src/constants';
-import { oppositeDir, rnd, rndElement, rndElement2D } from '../src/utils';
+import { rnd, rndElement, rndElement2D } from '../src/utils/random';
+import { oppositeDir } from '../src/utils/directions';
 
 describe('getting the opposite direction', () => {
 	it('returns the correct direction', () => {

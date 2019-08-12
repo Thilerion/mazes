@@ -1,5 +1,5 @@
 import { DIR_NAMES } from '../constants';
-import { rndElement } from '../utils';
+import { rndElement } from '../utils/random';
 
 export default function * binaryTreeAlgorithm({ grid, config }, onCycle, onFinish) {
 	const { bias = "NE" } = config.generators.binaryTree;

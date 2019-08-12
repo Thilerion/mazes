@@ -1,4 +1,4 @@
-import { rndElementSet, rndElement } from '../utils';
+import { rndElement } from '../utils/random';
 
 // Choose any cell on the grid and mark as visited
 // Choose a random cell on the grid, and move to neighbors continually, carving out a path

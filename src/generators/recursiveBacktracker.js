@@ -1,4 +1,4 @@
-import { rndElement2D, rndElement } from "../utils";
+import { rndElement2D, rndElement } from "../utils/random";
 
 // Works like hunt and kill, except instead of hunting for another cell,
 // it backtracks through its last path to find another one.

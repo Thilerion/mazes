@@ -1,5 +1,5 @@
 import Cell from "./Cell";
-import { dirVectors } from '../utils';
+import { dirVectors } from '../utils/directions';
 import { DIR_NAMES, WALL_CORNER, WALL_H, WALL_V, WALL_OPEN, PASSAGE_BLOCKED, PASSAGE_OPEN } from '../constants';
 
 export default class Grid {

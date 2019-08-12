@@ -1,4 +1,4 @@
-import { rndElement2D, rndElement } from '../utils';
+import { rndElement2D, rndElement } from '../utils/random';
 
 // Start anywhere on the grid, choose random neighbor
 // Move to that neighbor. If it hasn't been visited yet, link it to previous cell

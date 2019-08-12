@@ -1,4 +1,4 @@
-import { rndElement, rndElement2D, withoutElement } from "../utils";
+import { rndElement, rndElement2D } from "../utils/random";
 
 export default function* huntAndKillAlgorithm({ grid, config }, onCycle, onFinish) {
 	

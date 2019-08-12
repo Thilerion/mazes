@@ -1,5 +1,5 @@
 import { DIR_NAMES } from "../constants";
-import { oppositeDir } from '../utils';
+import { oppositeDir } from '../utils/directions';
 
 export default function findDeadEnds(Grid, detailed = false) {
 	let result = findDeadEndsBasic(Grid, detailed);

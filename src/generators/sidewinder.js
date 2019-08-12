@@ -1,5 +1,5 @@
 import { DIR_NAMES } from "../constants";
-import { rndElement } from '../utils';
+import { rndElement } from '../utils/random';
 
 // Work through grid by row, grouping cells together 
 //		(random amount, the "run" of cells)

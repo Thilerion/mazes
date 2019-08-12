@@ -20,7 +20,9 @@ export default {
 			unvisitedCell: '#666',
 
 			huntAndKillRow: 'rgba(250, 100, 100, 0.2)',
-			recursiveInStackCells: 'lightcyan'
+			recursiveInStackCells: 'lightcyan',
+
+			seed: 1
 		}
 	},
 

@@ -1,5 +1,5 @@
 import Vec from "./Vec";
-import { oppositeDir } from '../utils';
+import { oppositeDir } from '../utils/directions';
 import { DIR_NAMES } from '../constants';
 
 export default class Cell {
