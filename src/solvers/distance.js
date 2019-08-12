@@ -18,12 +18,10 @@ export default function* distanceSolver({rootCell}, onCycle, onFinish) {
 			}
 		})
 		frontier = newFrontier;
-		yield onCycle({ current: newFrontier, values });
+		yield onCycle({ current: newFrontier, values, range: Math.max(...values.values()) });
 	}
 
-	onFinish({ current: [], values });
+	onFinish({ current: [], values, range: Math.max(...values.values()) });
 	
-	console.log(Math.max(...values.values()));
-
 	return;
 }

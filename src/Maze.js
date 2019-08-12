@@ -40,7 +40,8 @@ export default class Maze {
 		this.solving = {
 			current: [],
 			values: null,
-			complete: false
+			distanceRange: null,
+			complete: false,
 		}
 	}
 
@@ -57,7 +58,8 @@ export default class Maze {
 			inStack: this.generation.inStack,
 
 			distancesCalculated: this.solving && this.solving.complete,
-			distanceMap: this.solving.values
+			distanceMap: this.solving.values,
+			distanceRange: this.solving.distanceRange
 		}
 	}
 
@@ -76,29 +78,35 @@ export default class Maze {
 		this.solving.current = [];
 		this.solving.values = new Map();
 		this.solving.complete = false;
+		this.solving.distanceRange = null;
+		console.time('solve');
 
 	}
-	updateSolving({current, values} = {}) {
+	updateSolving({current, values, range} = {}) {
 		if (current) {
 			this.solving.current = current;
 		}
 		if (values) {
 			this.solving.values = values;
+			this.solving.distanceRange = range;
 		}
 	}
 	finishSolving() {
 		this.state = STATE_BASE;
 		this.solving.current = [];
+		this.solving.distanceRange = null;
 		this.solving.complete = true;
+		console.timeEnd('solve');
 	}
 
 	solveMaze(solverFn) {
-		const onCycle = ({ current, values }) => {
+		const onCycle = ({ current, values, range }) => {
 			
 		};
-		const onFinish = ({ values }) => {
+		const onFinish = ({ values, range }) => {
 			this.finishSolving();
 			this.solving.values = values;
+			this.solving.distanceRange = range;
 			this.update();
 		}
 
@@ -112,13 +120,14 @@ export default class Maze {
 		}
 	}
 	solveMazeVisual(solverFn) {
-		const onCycle = ({ current, values }) => {
-			this.updateSolving({ current, values });
+		const onCycle = ({ current, values, range }) => {
+			this.updateSolving({ current, values, range });
 			this.update();
 		};
-		const onFinish = ({ values }) => {
+		const onFinish = ({ values, range }) => {
 			this.finishSolving();
 			this.solving.values = values;
+			this.solving.distanceRange = range;
 			this.update();
 		}
 

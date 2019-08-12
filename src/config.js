@@ -1,7 +1,7 @@
 export default {
 	width: 640,
 	height: 640,
-	cellSize: 80,
+	cellSize: 20,
 	wallSize: 4,
 
 	mazeRoot: [0, 0],
@@ -31,7 +31,7 @@ export default {
 	},
 
 	generatorAnimFps: 30,
-	solverAnimFps: 20,
+	solverAnimFps: 60,
 
 	seed: 1,
 

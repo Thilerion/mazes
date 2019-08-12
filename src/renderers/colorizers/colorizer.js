@@ -30,7 +30,7 @@ export default class Colorizer {
 
 	getDistanceColor(cell) {
 		const minimumScale = (this.data.cols + this.data.rows) * 1.5; // to prevent huge color changes in the beginning
-		const maxDistance = Math.max(...this.data.distanceMap.values());
+		const maxDistance = this.data.distanceRange;
 
 		const scaleSize = Math.ceil(Math.max(maxDistance, minimumScale));
 
