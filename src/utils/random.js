@@ -6,11 +6,30 @@ const mulberry32 = (seed) => () => {
 	return ((t ^ t >>> 14) >>> 0) / 4294967296;
 }
 
-let seededRnd = Math.random;
-
-export const reseed = (seed = Math.random()) => {
-	seededRnd = mulberry32(seed);
+const getRandomSeed = () => {
+	const timestamp = String(Date.now()).slice(-6);
+	const rnd = String(Math.random() * 1e6).replace('.', '');
+	const str = `${rnd}${timestamp}`.slice(-15);
+	return str % Number.MAX_SAFE_INTEGER;
 }
+
+let seededRnd = Math.random;
+let currentSeed = getRandomSeed();
+
+export const reseed = (seed) => {
+	if (!Number.isInteger(seed) && Number.isInteger(parseInt(seed))) {
+		seed = parseInt(seed);
+	}
+	if (!seed || !Number.isInteger(seed)) {
+		console.warn("Invalid seed, generating new one.");
+		seed = getRandomSeed();
+	}
+	console.log(`Seed: ${seed}`);
+	seededRnd = mulberry32(seed);
+	currentSeed = seed;
+}
+
+export const resetSeed = () => reseed(currentSeed);
 
 export const rnd = (maxExcl = 1) => Math.floor(seededRnd() * maxExcl);
 
