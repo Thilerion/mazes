@@ -19,3 +19,8 @@ export const STATE_EMPTY = "empty"; // grid created, maze not generated
 export const STATE_GENERATING = "generating"; // maze is being generated
 export const STATE_BASE = "base"; // maze is done generating
 export const STATE_SOLVING = "solving"; // maze is currently solving with a specified algorithm
+
+export const WALLS_SOUTH = "SOUTH";
+export const WALLS_EAST = "EAST";
+export const WALLS_SOUTHEAST = "SOUTHEAST";
+export const WALLS_NONE = "NO WALLS";

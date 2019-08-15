@@ -19,7 +19,7 @@ export default class Maze {
 		this.width = config.width + this.wallSize;
 		this.height = config.height + this.wallSize;
 		
-		this.grid = new Grid(this);
+		this.grid = new Grid(this).init();
 		this.stringRenderer = new StringRenderer(this);
 		this.renderer = new Renderer(this).init();
 		this.analysis = new Analyze(this.config);
@@ -64,7 +64,7 @@ export default class Maze {
 	}
 
 	init() {
-		this.grid.init();
+		// this.grid.init();
 		this.grid.setRoot(this.root);
 		this.grid.setFinish(this.finish);
 
