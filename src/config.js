@@ -1,8 +1,8 @@
 export default {
-	width: 640,
-	height: 640,
-	cellSize: 20,
-	wallSize: 4,
+	width: 600,
+	height: 600,
+	cellSize: 60,
+	wallSize: 30,
 
 	mazeRoot: [0, 0],
 	mazeFinish: [-1, -1], // negative means relative to end
@@ -10,7 +10,7 @@ export default {
 	colors: {
 		wall: 'black',
 		passage: 'white',
-		background: 'black',
+		background: 'white',
 
 		rootCell: 'lightgreen',
 		finishCell: 'orange',
@@ -30,7 +30,7 @@ export default {
 		showDistances: true
 	},
 
-	generatorAnimFps: 30,
+	generatorAnimFps: 60,
 	solverAnimFps: 60,
 
 	seed: 1,
