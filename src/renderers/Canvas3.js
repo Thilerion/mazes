@@ -60,7 +60,12 @@ export default class Canvas3Renderer {
 	}
 
 	initCells() {
-		return this.getAllCells();
+		const cellsMap = new Map();
+
+		this.grid.forEachCell((cell, x, y) => {
+			cellsMap.set(cell, null);
+		})
+		return cellsMap;
 	}
 
 	getAllWalls() {

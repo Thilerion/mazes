@@ -23,5 +23,5 @@ let maze = new Maze({
 	canvas
 }).init().render();
 
-maze.generateMazeVisual(Generator.recursiveBacktracker);
+maze.generateMaze(Generator.recursiveBacktracker);
 // maze.solveMazeVisual(DistanceSolver);
