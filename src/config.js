@@ -1,7 +1,7 @@
 export default {
 	width: 600,
 	height: 600,
-	cellSize: 10,
+	cellSize: 5,
 	wallSize: 1,
 
 	mazeRoot: [0, 0],
@@ -10,7 +10,7 @@ export default {
 	colors: {
 		wall: 'black',
 		passage: 'white',
-		background: 'white',
+		background: 'black',
 
 		rootCell: 'lightgreen',
 		finishCell: 'orange',

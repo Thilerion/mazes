@@ -45,6 +45,7 @@ export default class Canvas3Renderer {
 		container.style.height = `${this.height}px`;
 
 		this.renderedObjects.walls = this.initWalls();
+		this.renderedObjects.cells = this.initCells();
 
 		return this;
 	}
@@ -56,6 +57,10 @@ export default class Canvas3Renderer {
 			wallsMap.set(cell, WALLS_NONE);
 		})
 		return wallsMap;
+	}
+
+	initCells() {
+		return this.getAllCells();
 	}
 
 	getAllWalls() {
@@ -97,6 +102,26 @@ export default class Canvas3Renderer {
 		return changes;
 	}
 
+	getAllCells() {
+		const cellsMap = new Map();
+
+		this.grid.forEachCell((cell, x, y) => {
+			cellsMap.set(cell, this.colorizer.getCellColor(cell));
+		})
+		return cellsMap;
+	}
+
+	getCellChanges(updated, old) {
+		const changes = new Map();
+		for (let [cell, color] of updated) {
+			const oldColor = old.get(cell);
+			if (oldColor !== color) {
+				changes.set(cell, color);
+			}
+		}
+		return changes;
+	}
+
 	render() {
 		if (!this.initialRender) {
 			const bgColor = this.colorizer.getBackgroundColor();
@@ -113,6 +138,14 @@ export default class Canvas3Renderer {
 		this.renderWallChanges(wallColor, changedWalls);
 
 		this.renderedObjects.walls = updatedWalls;
+
+		const updatedCells = this.getAllCells();
+		const oldCells = this.renderedObjects.cells;
+		const changedCells = this.getCellChanges(updatedCells, oldCells);
+
+		this.renderCellChanges(changedCells);
+
+		this.renderedObjects.cells = updatedCells;
 	}
 
 	renderWallChanges(color, changes) {		
@@ -154,6 +187,14 @@ export default class Canvas3Renderer {
 		}
 
 		ctx.stroke();
+	}
+
+	renderCellChanges(changed) {
+		for (let [cell, color] of changed) {
+			const { x, y } = this.getCellOrigin(cell.x, cell.y);
+			this.ctx.fillStyle = color;
+			this.ctx.fillRect(x, y, this.cellSize, this.cellSize);
+		}
 	}
 
 	getCellOrigin(col, row) {
