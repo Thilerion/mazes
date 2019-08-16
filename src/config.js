@@ -1,7 +1,7 @@
 export default {
 	width: 600,
 	height: 600,
-	cellSize: 60,
+	cellSize: 5,
 	wallSize: 1,
 
 	mazeRoot: [0, 0],

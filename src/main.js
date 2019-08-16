@@ -24,4 +24,4 @@ let maze = new Maze({
 }).init().render();
 
 maze.generateMaze(Generator.recursiveBacktracker);
-// maze.solveMazeVisual(DistanceSolver);
+maze.solveMazeVisual(DistanceSolver);

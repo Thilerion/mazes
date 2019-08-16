@@ -36,7 +36,7 @@ export default class Colorizer {
 
 		const p = this.data.distanceMap.get(cell) / scaleSize;
 
-		const h = (-p * 190 + 140) % 360;
+		const h = Math.round((-p * 190 + 140) % 360);
 		return `hsl(${h}, 80%, 50%)`;
 	}
 
