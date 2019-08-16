@@ -2,7 +2,7 @@ export default {
 	width: 600,
 	height: 600,
 	cellSize: 10,
-	wallSize: 2,
+	wallSize: 1,
 
 	mazeRoot: [0, 0],
 	mazeFinish: [-1, -1], // negative means relative to end

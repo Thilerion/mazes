@@ -122,7 +122,6 @@ export default class Canvas3Renderer {
 		const ctx = this.wallCtx;
 		ctx.strokeStyle = color;
 		ctx.lineWidth = this.wallSize;
-		ctx.lineJoin = "round";
 		ctx.lineCap = "square";
 		ctx.beginPath();
 
@@ -135,20 +134,23 @@ export default class Canvas3Renderer {
 			const walls = cell.walls;
 			const { x: originX, y: originY } = this.getCellOrigin(cell.x, cell.y);
 
-			// TODO: extract to other method, better method for checking
+			let keepCorner = false;
+			if (cell.neighbors[DIR_NAMES.S]) {
+				if (cell.neighbors[DIR_NAMES.S].walls.includes(DIR_NAMES.E)) {
+					keepCorner = true;
+				}
+			}
+			if (!keepCorner && cell.neighbors[DIR_NAMES.E]) {
+				if (cell.neighbors[DIR_NAMES.E].walls.includes(DIR_NAMES.S)) {
+					keepCorner = true;
+				}
+			}
+			
 			ctx.clearRect(originX, originY, this.cellSize, this.cellSize);
-			try {
-				if (this.grid.grid[cell.y][cell.x + 1].walls.includes(DIR_NAMES.S)) {
-					ctx.fillStyle = "red";
-					ctx.fillRect(originX + this.cellSize - this.wallSize, originY + this.cellSize - this.wallSize, this.wallSize, this.wallSize);
-				}
-			} catch { }
-			try {
-				if (this.grid.grid[cell.y + 1][cell.x].walls.includes(DIR_NAMES.E)) {
-					ctx.fillStyle = "red";
-					ctx.fillRect(originX + this.cellSize - this.wallSize, originY + this.cellSize - this.wallSize, this.wallSize, this.wallSize);
-				}
-			} catch {}
+			if (keepCorner) {
+				ctx.fillStyle = color;
+				ctx.fillRect(originX + this.passageSize, originY + this.passageSize, this.wallSize, this.wallSize);
+			}
 
 			walls.forEach(w => this.createWallLine(originX, originY, w, wallSize, ctx));
 		}
