@@ -113,8 +113,6 @@ export default class Canvas3Renderer {
 		this.renderWallChanges(wallColor, changedWalls);
 
 		this.renderedObjects.walls = updatedWalls;
-
-		// this.renderWalls(wallColor);
 	}
 
 	renderWallChanges(color, changes) {		
@@ -145,7 +143,7 @@ export default class Canvas3Renderer {
 					keepCorner = true;
 				}
 			}
-			
+
 			ctx.clearRect(originX, originY, this.cellSize, this.cellSize);
 			if (keepCorner) {
 				ctx.fillStyle = color;
@@ -158,55 +156,11 @@ export default class Canvas3Renderer {
 		ctx.stroke();
 	}
 
-	renderWalls(color) {
-		const wallAdj = this.wallSize / 2;
-		this.ctx.strokeStyle = color;
-		this.ctx.lineWidth = this.wallSize;
-		this.ctx.lineJoin = "round";
-		this.ctx.lineCap = "square";
-		this.ctx.beginPath();
-
-		// OUTER WALLS - west and north
-		this.ctx.moveTo(wallAdj, this.height);
-		this.ctx.lineTo(wallAdj, wallAdj);
-		this.ctx.lineTo(this.width, wallAdj);
-
-		for (let y = 0; y < this.rows; y++) {
-			for (let x = 0; x < this.cols; x++) {
-				const walls = this.grid.grid[y][x].walls;				
-				const { x: originX, y: originY } = this.getCellOrigin(x, y);
-				walls.forEach(w => this.createWallLine(originX, originY, w, wallAdj));
-			}
-		}
-
-		this.ctx.stroke();
-	}
-
 	getCellOrigin(col, row) {
 		return {
 			x: col * this.cellSize + this.wallSize,
 			y: row * this.cellSize + this.wallSize
 		}
-	}
-
-	removeWall(cellX, cellY, dir, size, ctx) {
-		let x0 = cellX - (size);
-		let y0 = cellY - (size);
-		let x1 = cellX - (size);
-		let y1 = cellY - (size);
-
-		if (dir === DIR_NAMES.S) {
-			x1 += this.cellSize;
-			y0 = y1 = y0 + this.cellSize;
-		}
-		if (dir === DIR_NAMES.E) {
-			x0 += this.cellSize;
-			x1 = x0;
-			y1 += this.cellSize;
-		}
-
-		ctx.fillStyle = 'rgba(250, 0, 0, 0.2)';
-		ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
 	}
 
 	createWallLine(cellX, cellY, dir, size, ctx = this.ctx) {
