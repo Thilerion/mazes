@@ -1,23 +1,20 @@
-import CanvasRenderer from './renderers/Canvas';
-import Canvas2Renderer from './renderers/Canvas2';
-import Canvas3Renderer from './renderers/Canvas3';
-import Maze from './Maze';
-import config from './config';
 import Analyze from './analyze';
+import config from './config';
+import * as Generator from './generators';
+import Maze from './Maze';
+import DistanceSolver from './solvers/distance';
 import { reseed } from './utils/random';
+import * as Renderers from './renderers';
 
 if (process.env.NODE_ENV === "development") {
 	reseed(config.seed);
 }
 
-import * as Generator from './generators';
-
-import DistanceSolver from './solvers/distance';
-
 const canvas = document.getElementById('maze');
 
 let maze = new Maze({
-	Renderer: Canvas3Renderer,
+	Renderer: Renderers.canvasV3,
+	StringRenderer: Renderers.toString,
 	Analyze,
 	config,
 	canvas

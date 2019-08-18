@@ -1,11 +1,9 @@
-import StringRenderer from "./renderers/String";
 import Grid from './models/Grid';
 import Vec from "./models/Vec";
 import { STATE_BASE, STATE_EMPTY, STATE_GENERATING, STATE_SOLVING } from "./constants";
-import Distances from "./solvers/Distances";
 
 export default class Maze {
-	constructor({ canvas, config, Renderer, Analyze }) {
+	constructor({ canvas, config, Renderer, Analyze, StringRenderer }) {
 		this.config = config;
 
 		this.canvas = canvas;
