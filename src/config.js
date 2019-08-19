@@ -55,7 +55,7 @@ export default {
 	},
 
 	analyze: {
-		performPostAnalysis: true,
-		detailedPostAnalysis: true
+		performPostAnalysis: false,
+		detailedPostAnalysis: false
 	}
 }

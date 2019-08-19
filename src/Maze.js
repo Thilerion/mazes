@@ -77,7 +77,7 @@ export default class Maze {
 		this.solving.values = new Map();
 		this.solving.complete = false;
 		this.solving.distanceRange = null;
-		console.time('solve');
+		// console.time('solve');
 
 	}
 	updateSolving({current, values, range} = {}) {
@@ -94,7 +94,7 @@ export default class Maze {
 		this.solving.current = [];
 		this.solving.distanceRange = null;
 		this.solving.complete = true;
-		console.timeEnd('solve');
+		// console.timeEnd('solve');
 	}
 
 	solveMaze(solverFn) {
@@ -166,7 +166,9 @@ export default class Maze {
 		this.generation.huntAndKillRow = [];
 		this.generation.inStack = [];
 
-		this.analysis.postGeneration(this.grid);
+		if (this.config.analyze.performPostAnalysis) {
+			this.analysis.postGeneration(this.grid);
+		}
 	}
 
 	generateMaze(generatorFn) {
